@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
             format: {
                 type: DataTypes.STRING,
             },
-            isSubfolder: {
+            isSubFolder: {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
             },

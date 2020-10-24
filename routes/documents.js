@@ -20,18 +20,80 @@ router.get('/', async (req, res) => {
 // @desc      Create a folder
 // @access    Public
 router.post('/', async (req, res) => {
-    const { name, shelfID } = req.body;
-
     try {
-        console.log(req.body);
+        const { name, number, designation, description, tags, folderID } = req.body;
 
-        const folder = await Folder.create({
+        if (!name || !folderID) {
+            res.send(400).send('Either name or folderID is missing!');
+        }
+        const document = await Document.create({
             name,
-            ShelfId: shelfID,
+            number,
+            designation,
+            description,
+            tags,
+            FolderId: folderID,
         });
 
         // await user.save();
-        res.json({ folder }); // Returns the new user that is created in the database
+        res.json({ document }); // Returns the new user that is created in the database
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+// @route     POST api/folders
+// @desc      Create a folder
+// @access    Public
+router.put('/:id', async (req, res) => {
+    try {
+        const { name, number, designation, description, tags, folderID } = req.body;
+
+        if (!name || !folderID) {
+            res.send(400).send('Either name or folderID is missing!');
+        }
+        const document = await Document.update(
+            {
+                name,
+                number,
+                designation,
+                description,
+                tags,
+                FolderId: folderID,
+            },
+            {
+                where: {
+                    id: req.params.id,
+                },
+            },
+        );
+
+        // await user.save();
+        res.json({ document }); // Returns the new user that is created in the database
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    try {
+        let doc = await Document.findOne({
+            where: {
+                id: req.params.id,
+            },
+        });
+        // console.log(folder);
+        if (!doc) return res.status(404).json({ msg: 'Document not found' });
+
+        await Document.destroy({
+            where: {
+                id: req.params.id,
+            },
+        });
+
+        res.json({ msg: 'Document removed' });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
