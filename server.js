@@ -16,7 +16,9 @@ app.get('/', (req, res) => {
 //Define routes
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/contacts', require('./routes/contacts'));
+app.use('/api/shelves', require('./routes/shelves'));
+app.use('/api/folders', require('./routes/folders'));
+// app.use('/api/contacts', require('./routes/contacts'));
 
 //Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
