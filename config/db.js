@@ -21,7 +21,6 @@ Folder.belongsTo(Folder, {
 
 Folder.hasMany(Document);
 Document.belongsTo(Folder);
-// User.hasMany(Document);
 
 const connectDB = async () => {
     try {

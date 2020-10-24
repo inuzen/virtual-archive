@@ -5,12 +5,21 @@ module.exports = (sequelize, DataTypes) => {
             name: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                defaultValue: 'Folder Name',
             },
-            folderID: {
-                type: DataTypes.UUID,
-                defaultValue: DataTypes.UUIDV4,
-                primaryKey: true,
+            year: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+            number: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            format: {
+                type: DataTypes.STRING,
+            },
+            isSubfolder: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
             },
         },
         {

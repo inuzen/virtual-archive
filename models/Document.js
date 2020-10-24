@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.TEXT,
         },
-        tag: {
+        tags: {
             type: DataTypes.ARRAY(DataTypes.STRING),
         },
         id: {
