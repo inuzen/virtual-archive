@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const config = require('config');
-const UserModel = require('../models/User');
+
 const DocumentModel = require('../models/Document');
 const ShelfModel = require('../models/Shelf');
 const FolderModel = require('../models/Folder');
@@ -14,7 +14,9 @@ const Document = DocumentModel(sequelize, Sequelize);
 Shelf.hasMany(Folder);
 Folder.belongsTo(Shelf);
 
-Folder.hasMany(Folder);
+Folder.hasMany(Folder, {
+    foreignKey: 'parentFolderId',
+});
 Folder.belongsTo(Folder, {
     foreignKey: 'parentFolderId',
 });
@@ -22,12 +24,14 @@ Folder.belongsTo(Folder, {
 Folder.hasMany(Document);
 Document.belongsTo(Folder);
 
+// const shelfNames = ['НТЦ ПРОТЕЙ', 'ПРОТЕЙ СТ (АРХ)', 'ПРОТЕЙ (СЕРТ)'];
+
 const connectDB = async () => {
     try {
         await sequelize.authenticate();
         console.log('Postgres Connected');
 
-        await sequelize.sync({ force: true });
+        await sequelize.sync({ alter: true });
     } catch (err) {
         console.error(err.message);
         process.exit(1);
