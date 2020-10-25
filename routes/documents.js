@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-
-const { Document } = require('../config/db');
+const { Document, Folder } = require('../config/db');
+const { Op } = require('sequelize');
 
 router.get('/', async (req, res) => {
     try {
         const docs = await Document.findAll();
-        console.log(docs.every((docs) => docs instanceof Document)); // true
-        console.log('All folders:', JSON.stringify(docs, null, 2));
 
         res.json(docs);
     } catch (error) {
@@ -15,7 +13,37 @@ router.get('/', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+router.get('/findDocument', async (req, res) => {
+    try {
+        const { name, number, designation } = req.body;
 
+        let searchObj = {};
+        if (name) {
+            searchObj.name = { [Op.substring]: name.toLowerCase() };
+        }
+        if (designation) {
+            searchObj.year = { [Op.substring]: designation.toLowerCase() };
+        }
+        if (number) {
+            searchObj.number = { [Op.substring]: number.toLowerCase() };
+        }
+
+        const docs = await Document.findAll({
+            where: searchObj,
+            include: {
+                model: Folder,
+                where: {
+                    id: 1,
+                },
+            },
+        });
+
+        res.json(docs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
 // @route     POST api/folders
 // @desc      Create a folder
 // @access    Public
@@ -27,11 +55,11 @@ router.post('/', async (req, res) => {
             res.send(400).send('Either name or folderID is missing!');
         }
         const document = await Document.create({
-            name,
-            number,
-            designation,
-            description,
-            tags,
+            name: name.toLowerCase(),
+            number: number ? number.toLowerCase() : '',
+            designation: designation ? designation.toLowerCase() : '',
+            description: description ? description.toLowerCase() : '',
+            tags: tags ? tags : [],
             FolderId: folderID,
         });
 

@@ -1,14 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
+const { Folder, Document } = require('../config/db');
 const { Op } = require('sequelize');
-const { Folder } = require('../config/db');
-
 router.get('/', async (req, res) => {
     try {
         const folders = await Folder.findAll();
-        console.log(folders.every((folders) => folders instanceof Folder)); // true
-        console.log('All folders:', JSON.stringify(folders, null, 2));
 
         res.json(folders);
     } catch (error) {
@@ -19,15 +16,16 @@ router.get('/', async (req, res) => {
 router.get('/findFolder', async (req, res) => {
     try {
         const { name, year, number, format } = req.body;
+
         let searchObj = {};
         if (name) {
-            searchObj.name = name;
+            searchObj.name = { [Op.substring]: name.toLowerCase() };
         }
         if (year) {
             searchObj.year = year;
         }
         if (number) {
-            searchObj.number = number;
+            searchObj.number = { [Op.substring]: number.toLowerCase() };
         }
         if (format) {
             searchObj.format = format;
@@ -57,7 +55,7 @@ router.post('/', async (req, res) => {
             }
         }
 
-        if (!name || !year || !number || !format) {
+        if (!name || !year || !number || !format || !shelfID) {
             res.send(400).send('One or more of the required fields is missing');
         }
         if (format !== 'A3' && format !== 'A4') {
@@ -65,10 +63,10 @@ router.post('/', async (req, res) => {
         }
 
         const folder = await Folder.create({
-            name,
+            name: name.toLowerCase(),
             year,
-            number,
-            format,
+            number: number.toLowerCase(),
+            format: format.toLowerCase(),
             isSubFolder,
             parentFolderId: isSubFolder ? parentFolderId : null,
             ShelfId: shelfID,
@@ -92,6 +90,11 @@ router.delete('/:id', async (req, res) => {
         // console.log(folder);
         if (!folder) return res.status(404).json({ msg: 'Folder not found' });
 
+        await Document.destroy({
+            where: {
+                FolderId: req.params.id,
+            },
+        });
         await Folder.destroy({
             where: {
                 id: req.params.id,
@@ -145,7 +148,7 @@ router.put('/:id', async (req, res) => {
         );
 
         // await user.save();
-        res.json({ folder }); // Returns the new user that is created in the database
+        res.json({ folder }); // Returns the updated folder that is created in the database
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
