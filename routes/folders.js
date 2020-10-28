@@ -13,6 +13,33 @@ router.get('/', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+router.get('/foldersWithDocuments', async (req, res) => {
+    try {
+        const folders = await Folder.findAll({
+            include: Document,
+        });
+
+        res.json(folders);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
+router.get('/foldersWithDocuments/:id', async (req, res) => {
+    try {
+        const folder = await Folder.findOne({
+            where: {
+                id: req.params.id,
+            },
+            include: Document,
+        });
+
+        res.json(folder);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
 router.get('/findFolder', async (req, res) => {
     try {
         const { name, year, number, format } = req.body;

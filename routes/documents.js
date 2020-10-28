@@ -13,6 +13,20 @@ router.get('/', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+router.get('/:id', async (req, res) => {
+    try {
+        const doc = await Document.findOne({
+            where: {
+                id: req.params.id,
+            },
+        });
+
+        res.json(doc);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
 router.get('/findDocument', async (req, res) => {
     try {
         const { name, number, designation } = req.body;

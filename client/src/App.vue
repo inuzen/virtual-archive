@@ -7,8 +7,8 @@
 <style lang="scss">
 @import "~vue-material/dist/theme/engine";
 @include md-register-theme("default", (
-  primary: md-get-palette-color(blue, A200), // The primary color of your application
-  accent: md-get-palette-color(red, A200) // The accent or secondary color
+  primary: #02AEB9, // The primary color of your application
+  accent: #B8E6E9 // The accent or secondary color
 ));
 
 @import "~vue-material/dist/theme/all";

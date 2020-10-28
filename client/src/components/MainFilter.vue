@@ -1,7 +1,8 @@
 <template>
   <div class="main-filter">
     <div class="md-layout md-gutter">
-        <div class="md-layout-item">
+        <div class="md-layout-item mad-layout md-layout-gutter">
+                    <div class="md-layout-item">
             <md-field md-clearable>
                 <label>Название шкафа</label>
                 <md-input></md-input>
@@ -13,6 +14,8 @@
                 <md-input></md-input>
             </md-field>
         </div>
+        </div>
+        <div class="md-layout-item mad-layout-gutter">
         <div class="md-layout-item">
             <md-field md-clearable>
                 <label>Название папки</label>
@@ -25,6 +28,9 @@
                 <md-input></md-input>
             </md-field>
         </div>
+        </div>
+
+
     </div>
     
     <div class="md-layout md-gutter">
@@ -47,7 +53,7 @@
             </md-field>
         </div>
         <div class="md-layout-item md-size-15">
-            <md-button class="md-raised md-primary">Найти</md-button>
+            <md-button class="md-raised md-primary">Искать</md-button>
         </div>
     </div>
   </div>
@@ -59,6 +65,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class MainFilter extends Vue {
 }
+
 </script>
 
 <style scoped lang="scss">
