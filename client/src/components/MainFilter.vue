@@ -1,5 +1,6 @@
 <template>
   <div class="main-filter">
+  <ShelfFilter />
     <div class="md-layout md-gutter">
         <div class="md-layout-item mad-layout md-layout-gutter">
                     <div class="md-layout-item">
@@ -61,8 +62,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import ShelfFilter from '@/components/filters/ShelfFilter.vue'
 
-@Component
+@Component({
+  components: {
+    ShelfFilter,
+  },
+})
 export default class MainFilter extends Vue {
 }
 

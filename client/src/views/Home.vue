@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <MainFilter />
-    <Shelves  :key="2"/>
+    <Shelves :key="2"/>
   </div>
 </template>
 
