@@ -1,0 +1,71 @@
+@import './colors.scss';
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    margin-right: 30px;
+    &:last-child {
+        margin-right: 0px;
+    }
+    select {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    input,
+    select,
+    textarea {
+        padding: 15px 30px;
+        min-height: 60px;
+        font-size: 20px;
+        line-height: 150%;
+        border-radius: 5px;
+        transition: all 0.3s;
+        cursor: pointer;
+        width: 100%;
+    }
+    .input-label {
+        margin-left: 30px;
+        font-size: 20px;
+        line-height: 150%;
+        color: $text-interactive;
+        transition: all 0.3s;
+        &.disabled {
+            color: $folder;
+        }
+    }
+
+    select {
+        background-color: $white;
+        // background-image: url('../../assets/icons/select-arrow.svg');
+        background-size: 16px 8px;
+        background-position: center right 30px;
+        background-repeat: no-repeat;
+        border: 1px solid $interactive;
+        &:disabled {
+            border: 1px solid $disabled-border;
+            pointer-events: none;
+        }
+        &:hover,
+        &:focus {
+            background-color: $input-default;
+        }
+    }
+    input,
+    textarea {
+        border: none;
+        background-color: $input-default;
+        &:disabled {
+            pointer-events: none;
+            background-color: $disabled-fill;
+        }
+        &:hover,
+        &:focus {
+            background-color: $input-hover;
+        }
+    }
+}

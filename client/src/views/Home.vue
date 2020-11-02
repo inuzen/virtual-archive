@@ -18,3 +18,9 @@ import Shelves from '@/components/Shelves.vue'
 })
 export default class Home extends Vue {}
 </script>
+<style lang="scss">
+.home{
+  
+ 
+}
+</style>

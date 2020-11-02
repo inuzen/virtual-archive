@@ -1,0 +1,36 @@
+@import './colors.scss';
+
+.btn {
+    outline: none;
+    margin: 0;
+    border: 0;
+    -webkit-appearance: none;
+    display: inline-block;
+    background-color: $interactive;
+    padding: 11px 24px;
+    text-align: center;
+    font-size: 25px;
+    line-height: 150%;
+    color: $white;
+    border-radius: 5px;
+    min-width: 240px;
+    height: 60px;
+    text-transform: uppercase;
+    &.primary {
+        background-color: $interactive;
+        font-weight: bold;
+    }
+    &.secondary {
+        background-color: $white;
+        border: 1px solid $interactive;
+        color: $interactive;
+    }
+
+    &.slim {
+        padding: 0 24px;
+        height: 40px;
+    }
+    &.danger {
+        background-color: $delete;
+    }
+}

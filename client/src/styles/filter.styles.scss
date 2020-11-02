@@ -1,0 +1,46 @@
+@import './colors.scss';
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    .checkbox-wrapper {
+        font-size: 20px;
+        line-height: 150%;
+        font-weight: bold;
+        color: $text-folder;
+        margin-bottom: 20px;
+        input {
+            margin-right: 10px;
+        }
+    }
+}
+
+.filter-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    & > * {
+        flex: 1 1 100%;
+    }
+    &.combined-filter {
+        justify-content: flex-start;
+        .input-wrapper {
+            margin-right: 0;
+            .no-right-border {
+                border-right: 0;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+            .no-left-border-r {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    }
+}
