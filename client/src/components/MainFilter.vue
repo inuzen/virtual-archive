@@ -1,12 +1,12 @@
 <template>
   <div class="main-filter">
   <div class="single-row">
-    <ShelfFilter />
+    <ShelfFilter @filterChange="onFilterChange" />
     <FolderFilter />
   </div>
   <div class="doc-filter-row">
       <DocumentFilter/>
-      <button class="btn primary">Искать</button>
+      <button @click="onClick" class="btn primary">Искать</button>
   </div>
 
   </div>
@@ -26,6 +26,18 @@ import DocumentFilter from '@/components/filters/DocumentFilter.vue'
   },
 })
 export default class MainFilter extends Vue {
+
+    public filter1 = {}
+
+    public onFilterChange (filterValues) {
+      this.filter1 = filterValues
+
+    }
+    public async onClick  () {
+      console.log(this.filter1);
+      const bruh = await fetch('fdsa',{ method: 'POST', body: JSON.stringify(this.filter1)})
+    }
+
 }
 
 </script>
