@@ -1,19 +1,10 @@
 <template>
   <div class="filter-container shelf-filter">
-      <div class="checkbox-wrapper"><input type="checkbox" v-model="useFilter" name="" id="">Поиск по документу</div>
+      <div class="checkbox-wrapper" v-on:click="onClick"><input type="checkbox" @input="toggleFilter" v-model="filterValues.enabled" name="" id="">Поиск по документам</div>
       <div class="filter-row">
-          <div class="input-wrapper">
-              <label for="" class="input-label" :class="{disabled: !useFilter}">Инв №</label>
-             <input :disabled="!useFilter" type="text" name="" id=""/>
-          </div>
-          <div class="input-wrapper">
-              <label for="" class="input-label" :class="{disabled: !useFilter}">Обозначение</label>
-             <input :disabled="!useFilter" type="text" name="" id=""/>
-          </div>
-          <div class="input-wrapper">
-              <label for="" class="input-label" :class="{disabled: !useFilter}">Название</label>
-             <input :disabled="!useFilter" type="text" name="" id=""/>
-          </div>
+            <TextInput :label="'Инв №'" @input="(val)=>onInputChange(val, 'docNumber')"  :disabled="!filterValues.enabled" />
+            <TextInput :label="'Обозначение'" @input="(val)=>onInputChange(val, 'docDesignation')"  :disabled="!filterValues.enabled" />
+            <TextInput :label="'Название'" @input="(val)=>onInputChange(val, 'docName')"  :disabled="!filterValues.enabled" />
       </div>
   </div>
 </template>
@@ -21,9 +12,34 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-@Component
+import TextInput from '@/components/TextInput.vue'
+
+@Component({
+  components: {
+    TextInput,
+    }
+})
 export default class DocumentFilter extends Vue {
-    public useFilter = false
+    public filterValues = {
+        enabled: false,
+        docName: '',
+        docNumber: '',
+        docDesignation: '',
+    }
+
+    public toggleFilter () {
+        this.$emit('toggleChkbx', this.filterValues.enabled)
+    }
+    public onClick () {
+        this.filterValues.enabled = !this.filterValues.enabled;
+        this.$emit('toggleChkbx', this.filterValues.enabled)
+    }
+
+    public onInputChange (value, inputName) {
+        this.filterValues[inputName] = value
+        
+        this.$emit('filterChange', this.filterValues);    
+    }
 }
 
 </script>

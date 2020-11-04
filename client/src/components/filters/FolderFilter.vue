@@ -1,27 +1,46 @@
 <template>
   <div class="filter-container shelf-filter">
-      <div class="checkbox-wrapper"><input type="checkbox" v-model="useFilter" name="" id="">Поиск по папкам</div>
+      <div class="checkbox-wrapper" v-on:click="onClick"><input type="checkbox" @input="toggleFilter" v-model="filterValues.enabled" name="" id="">Поиск по папкам</div>
       <div class="filter-row">
-
-          <div class="input-wrapper">
-              <label for="" class="input-label" :class="{disabled: !useFilter}">Название папки</label>
-             <input :disabled="!useFilter" type="text" name="" id=""/>
-          </div>
-
-          <div class="input-wrapper">
-              <label for="" class="input-label" :class="{disabled: !useFilter}">№</label>
-             <input :disabled="!useFilter" type="text" name="" id=""/>
-          </div>
+            <TextInput :label="'Название папки'" @input="(val)=>onInputChange(val, 'folderName')"  :disabled="!filterValues.enabled" />
+            <TextInput :label="'№'" @input="(val)=>onInputChange(val, 'folderNumber')"  :disabled="!filterValues.enabled" />
       </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import TextInput from '@/components/TextInput.vue'
 
-@Component
-export default class FolderFilter extends Vue {
-    public useFilter = false
+@Component({
+  components: {
+    TextInput,
+    }
+})
+export default class FolderFilter extends Vue {    
+    
+    public filterValues = {
+        enabled: false,
+        folderName: '',
+        folderNumber: '',
+    }
+
+    public toggleFilter () {
+        // this.filterValues.enabled = !this.filterValues.enabled;
+        
+        
+        this.$emit('toggleChkbx', this.filterValues.enabled)
+    }
+    public onClick () {
+        this.filterValues.enabled = !this.filterValues.enabled;
+        this.$emit('toggleChkbx', this.filterValues.enabled)
+    }
+
+    public onInputChange (value, inputName) {
+        this.filterValues[inputName] = value
+        
+        this.$emit('filterChange', this.filterValues);    
+    }
 }
 
 </script>

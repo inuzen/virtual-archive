@@ -1,23 +1,20 @@
 <template>
   <div class="filter-container shelf-filter">
-      <div class="checkbox-wrapper" v-on:click="onClick"><input type="checkbox" @input="toggleCheckbox" v-model="enableFilter" name="" id="">Поиск по шкафу</div>
+      <div class="checkbox-wrapper" v-on:click="onClick"><input type="checkbox" @input="toggleFilter" v-model="filterValues.enabled" name="" id="">Поиск по полкам</div>
       <div class="filter-row combined-filter">
           <div class="input-wrapper">
-              <label for="" class="input-label" :class="{disabled: !enableFilter}">Название шкафа</label>
-              <select class="input-select no-right-border" :disabled="!enableFilter" name="" id="">
+              <label for="" class="input-label" :class="{disabled: !filterValues.enabled}">Название шкафа</label>
+              <select @change="onNameChange" class="input-select no-right-border" :disabled="!filterValues.enabled" name="" id="">
                   <option v-for="item in shelfNames" :key="item" :value="item">{{item}}</option>                  
               </select>
           </div>
           <div class="input-wrapper">
-              <label for="" class="input-label" :class="{disabled: !enableFilter}">№</label>
-              <select class="input-select no-left-border-r" :disabled="!enableFilter" name="" id="">
+              <label for="" class="input-label" :class="{disabled: !filterValues.enabled}">№</label>
+              <select @change="onNumChange" class="input-select no-left-border-r" :disabled="!filterValues.enabled" name="" id="">
                   <option v-for="item in shelfNumber" :key="item" :value="item">{{item}}</option>
               </select>
           </div>         
       </div>
-      <TextInput :label="'Hello'" @input="(val)=>onInputChange(val, 'in1')"  :disabled="!enableFilter" />
-      <TextInput :label="'Hello2'" @input="(val)=>onInputChange(val, 'in2')"  :disabled="!enableFilter" />
-      <span>{{obj}}</span>
   </div>
 </template>
 
@@ -33,28 +30,34 @@ import TextInput from '@/components/TextInput.vue'
 export default class ShelfFilter extends Vue {
     // @Model('change', { type: Boolean }) public checked!: boolean
     
-    public enableFilter = false
     public shelfNames = ['НТЦ Протей', 'НТЦ Протей2', 'НТЦ Протей3']
     public shelfNumber = [1, 2, 3, 4, 5, 6]
-    public input = ''
-    public input2 = ''
-    public obj = {
-        in1: '',
-        in2: ''
-        
+    
+    public filterValues = {
+        enabled: true,
+        shelfName: '',
+        shelfNumber: 0,
     }
-    public toggleCheckbox () {
-        this.$emit('toggleChkbx', this.enableFilter)
+    public toggleFilter () {
+        this.$emit('toggleChkbx', this.filterValues.enabled)
     }
     public onClick () {
-        this.enableFilter = !this.enableFilter;
-        this.$emit('toggleChkbx', this.enableFilter)
+        this.filterValues.enabled = !this.filterValues.enabled;
+        this.$emit('toggleChkbx', this.filterValues.enabled)
     } 
 
+    public onNameChange (event) {
+        this.filterValues.shelfName = event.target.value
+        this.$emit('filterChange', this.filterValues);        
+    }
+    public onNumChange (event) {
+        this.filterValues.shelfNumber = event.target.value  
+        this.$emit('filterChange', this.filterValues);        
+    }
+
     public onInputChange (value, inputName) {
-        this.obj[inputName] = value
-        
-        this.$emit('filterChange', this.obj);        
+        this.filterValues[inputName] = value
+        this.$emit('filterChange', this.filterValues);        
     }
 
 

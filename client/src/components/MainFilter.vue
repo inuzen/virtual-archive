@@ -1,11 +1,11 @@
 <template>
   <div class="main-filter">
   <div class="single-row">
-    <ShelfFilter @filterChange="onFilterChange" />
-    <FolderFilter />
+    <ShelfFilter @filterChange="onShelfFilterChange" />
+    <FolderFilter  @filterChange="onFolderFilterChange" />
   </div>
   <div class="doc-filter-row">
-      <DocumentFilter/>
+      <DocumentFilter @filterChange="onDocFilterChange"/>
       <button @click="onClick" class="btn primary">Искать</button>
   </div>
 
@@ -27,15 +27,22 @@ import DocumentFilter from '@/components/filters/DocumentFilter.vue'
 })
 export default class MainFilter extends Vue {
 
-    public filter1 = {}
+    public shelfFilter = {}
+    public folderFilter = {}
+    public documentFilter = {}
 
-    public onFilterChange (filterValues) {
-      this.filter1 = filterValues
-
+    public onShelfFilterChange (filterValues) {
+      this.shelfFilter = filterValues
+    }
+    public onFolderFilterChange (filterValues) {
+      this.folderFilter = filterValues
+    }
+    public onDocFilterChange (filterValues) {
+      this.documentFilter = filterValues
     }
     public async onClick  () {
-      console.log(this.filter1);
-      const bruh = await fetch('fdsa',{ method: 'POST', body: JSON.stringify(this.filter1)})
+      
+      const bruh = await fetch('fdsa',{ method: 'POST', body: JSON.stringify({shelf: this.shelfFilter, folder: this.folderFilter, document: this.documentFilter})})
     }
 
 }
