@@ -6,7 +6,7 @@
   </div>
   <div class="doc-filter-row">
       <DocumentFilter @filterChange="onDocFilterChange"/>
-      <button @click="onClick" class="btn primary">Искать</button>
+      <button @click="onClick" class="btn primary">ИСКАТЬ</button>
   </div>
 
   </div>
