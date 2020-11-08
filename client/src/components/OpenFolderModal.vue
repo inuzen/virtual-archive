@@ -4,11 +4,17 @@
         <div class="folder-title-highlight active">
         <div class="folder-title-wrapper">
                 <div class="year">2020</div>
-                <div class="name">name</div>
-                <div class="number">number</div>
+                <div v-if="!folderEditMode" class="name">{{folderInfo.folderName}}</div>
+                <div v-if="!folderEditMode" class="number">{{folderInfo.folderNumber}}</div>
+                <div v-if="folderEditMode" class="name">
+                    <TextInput @input="(val)=>onInputChange(val, 'folderName')" :value='folderInfo.folderName' />
+                </div>
+                <div v-if="folderEditMode" class="number">
+                    <TextInput @input="(val)=>onInputChange(val, 'folderNumber')" :value='folderInfo.folderNumber' />
+                </div>
             </div>
         </div>
-        <div class="edit-button-container">
+        <div class="edit-button-container" @click="toggle">
             <div class="img-wrapper">
                 <img src="../assets/icons/edit-icon.svg" alt="">
             </div>
@@ -18,39 +24,66 @@
             <div class="subfolder"></div>
             <button class="btn primary add-subfolder-btn">+</button>
         </div>
-        <button class="btn primary">Добавить документ</button>
+        <button @click="onShowDocumentModal" class="btn primary">Добавить документ</button>
         <div class="document-list-container">
-            <div class="header"></div>
-            <div class="dropdowns">
-                <div @click="onShowDescription">
-                    <span class="doc-name">123</span>
-                    <span class="doc-designation">321</span>
-                    <span class="doc-name">33</span>
-                    <div class="tags">
-                        <span class="tag">bruh</span>
-                    </div>
-                    <button class="delete-btn">-</button>
-                </div>                  
-                <p v-if="expand">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt, necessitatibus soluta quibusdam similique exercitationem ad. Expedita fuga vel maxime repudiandae, facilis possimus unde natus!</p>
+            <div class="header">
+                <span>Инв №</span>
+                <span>Обозначение</span>
+                <span>Документ</span>
+                <span>Стикер</span>
+            </div>
+            <div class="document-list">
+                <Document/>
+                <Document/>
             </div>
         </div>
+        <md-dialog :md-active.sync="showDocumentModal"><DocumentModal @closeDocModal='closeDocModal'/></md-dialog>
     </div>
 </template>
 
 <script lang='ts'>
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import Document from '@/components/Document.vue'
+import TextInput from '@/components/TextInput.vue'
+import DocumentModal from '@/components/dialogs/DocumentModal.vue'
 
-@Component
-export default class OpenFolderModal extends Vue {
-    public expand = false;
-    
-    public onShowDescription (e) {
-        this.expand = !this.expand
+@Component({
+  components: {
+    Document,
+    DocumentModal,
+    TextInput,
     }
+})
+export default class OpenFolderModal extends Vue {
+    public folderEditMode = false;
+    public showDocumentModal = false;
+    public folderInfo = {
+        folderName: 'test',
+        folderNumber: 'abc2d',
+    }
+    public onInputChange (value, inputName) {
+        this.folderInfo[inputName] = value
+        
+        this.$emit('updateFolder', this.folderInfo);
+    }
+    public closeDocModal () {
+        this.showDocumentModal=false;
+    }
+    public onShowDocumentModal () {
+        this.showDocumentModal = true;
+    }
+
+    public editModeOn () {
+        this.folderEditMode = true;
+    }
+    public toggle () {
+        this.folderEditMode = !this.folderEditMode;
+    }
+
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '../styles/colors.scss';
 
 .folder-modal-wrapper{
@@ -74,6 +107,7 @@ export default class OpenFolderModal extends Vue {
     .edit-button-container{
         margin-left: 30px;
         margin-right: 20px;
+        cursor: pointer;
     }
 }
 .folder-title-highlight{
@@ -103,16 +137,32 @@ export default class OpenFolderModal extends Vue {
         writing-mode: vertical-lr;
         text-orientation: mixed;
         transform: rotate(180deg);
+        margin-right: 20px;
     }
     .name {
         text-align: start;
         width: 50%;
         font-size: 60px;
+        input {
+            font-size: 60px;
+        }
     }
     .number{
         margin-left: auto;
         margin-right: 20px;
         font-size: 40px;
+        input {
+            font-size: 40px;
+            max-width: 130px;
+        }
+    }
+    .input-wrapper{
+        input{
+            padding: 15px 0;
+            min-height: 100px;
+            height: 100%;
+          
+        }
     }
 }
 
@@ -127,6 +177,24 @@ export default class OpenFolderModal extends Vue {
         line-height: 0;
         font-weight: normal;
         cursor: pointer;
+    }
+}
+.document-list-container{
+    margin-top: 30px;
+    width: 100%;
+    .header{
+        display: grid;
+        grid-template-columns: 150px 420px 420px 240px;
+        grid-gap: 30px;
+        justify-items: start;
+        font-size: 20px;
+        line-height: 100%;
+        color: $folder;
+        font-weight: bold;
+       
+    }
+    .document-list{
+        overflow-y: auto;
     }
 }
 </style>

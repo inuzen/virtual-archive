@@ -49,9 +49,12 @@ export default class MainFilter extends Vue {
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .main-filter{ 
     margin-bottom:90px;
+    .input-wrapper {
+      margin-right: 30px;
+    }
     
 }
 .single-row{
@@ -81,4 +84,5 @@ export default class MainFilter extends Vue {
     }
 
 }
+
 </style>

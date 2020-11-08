@@ -1,0 +1,47 @@
+@import './colors.scss';
+.edit-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 25px;
+    // line-height: 150%;
+    width: 500px;
+    background-color: $white;
+
+    .modal-title {
+        text-transform: uppercase;
+        padding: 17px 30px;
+        background-color: $interactive;
+        color: $white;
+        font-weight: bold;
+        height: 60px;
+        width: 100%;
+    }
+    .modal-content {
+        padding: 17px 30px;
+
+        .modal-info {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    }
+    .form-container {
+        display: flex;
+        flex-direction: column;
+
+        .input-wrapper {
+            margin-bottom: 30px;
+        }
+        .button-row {
+            display: flex;
+            flex-direction: row;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            & > * {
+                min-width: 0;
+                // width: 190px;
+                margin-right: 20px;
+            }
+        }
+    }
+}
