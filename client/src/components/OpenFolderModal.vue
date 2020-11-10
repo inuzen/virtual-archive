@@ -1,9 +1,14 @@
 <template>
     <div class="folder-modal-wrapper">
+        <div class="close-modal" @click="closeFolderModal">
+            <div class="img-wrapper">
+                    <img src="../assets/icons/black-cross.svg" alt="">
+                </div>
+        </div>
         <div class="folder-title-container">            
             <div class="folder-title-highlight active">
                 <div class="folder-title-wrapper">
-                    <div class="year">2020</div>
+                    <div class="year">{{folderInfo.year}}</div>
                     <div v-if="!folderEditMode" class="name">{{folderInfo.folderName}}</div>
                     <div v-if="!folderEditMode" class="number">{{folderInfo.folderNumber}}</div>
                     <div v-if="folderEditMode" class="name">
@@ -23,9 +28,9 @@
         <div v-if="folderEditMode" class="folder-edit-container">
             <p class="label">Переместить в</p>
             <div class="folder-actions-row">
-                <div class="actions"></div>
+                <ShelfFilter :showCheckbox="false" @filterChange="onShelfFilterChange" />               
                 <div v-if="markForDelete" class="message-container">
-                    Удаление папки вступит в силу после сохранения изменений, все данные в этой папке будут потерены
+                    Удаление папки вступит в силу после сохранения изменений, все данные в этой папке будут потеряны
                 </div>
             </div>
             <div class="button-row">
@@ -61,21 +66,36 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import Document from '@/components/Document.vue'
 import TextInput from '@/components/TextInput.vue'
 import DocumentModal from '@/components/dialogs/DocumentModal.vue'
-
+import ShelfFilter from '@/components/filters/ShelfFilter.vue'
+import { FolderClass } from '@/classes/folder.ts'
 @Component({
   components: {
     Document,
     DocumentModal,
     TextInput,
+    ShelfFilter
     }
 })
 export default class OpenFolderModal extends Vue {
+    @Prop(Object) public folder!: FolderClass;
+
     public folderEditMode = false;
     public showDocumentModal = false;
     public folderInfo = {
         folderName: 'test',
         folderNumber: 'abc2d',
+        folderYear: 2020
     }
+
+    constructor() {
+        super();
+        if (this.folder) {
+            this.folderInfo.folderName = this.folder.name;
+            this.folderInfo.folderNumber = this.folder.number;
+            this.folderInfo.folderYear = this.folder.year;
+        }
+    }
+
     public markForDelete = false;
     public onInputChange (value, inputName) {
         this.folderInfo[inputName] = value
@@ -107,22 +127,45 @@ export default class OpenFolderModal extends Vue {
         this.markForDelete = true;
     } 
 
+    public onShelfFilterChange (filterValues) {
+      //this.shelfFilter = filterValues
+    }
+
+    public closeFolderModal () {
+        this.$emit('closeFolderModal');
+    }
+
 }
 </script>
 
 <style lang="scss">
 @import '../styles/colors.scss';
 
+.img-wrapper {
+    img{
+        display: block;
+    }
+}
 .folder-modal-wrapper{
     width: 100%;
     max-width: 1590px;
     height: 80%;
+    overflow-y: auto;
     box-shadow: $shadow;
     padding: 70px 90px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    position: relative;
+    background-color: $white;
+    
+    .close-modal{
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+    }
 }
 .folder-title-container{
     display: flex;
@@ -218,10 +261,57 @@ export default class OpenFolderModal extends Vue {
         line-height: 100%;
         color: $folder;
         font-weight: bold;
+        position: sticky;
+        top: 0;
        
     }
     .document-list{
-        overflow-y: auto;
+        // overflow-y: scroll;
+    }
+}
+.folder-edit-container{
+    width: 100%;
+    margin-bottom: 100px;
+    .label{
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 150%;
+        margin-bottom: 15px;
+        text-align: left;
+    }
+    .folder-actions-row{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 30px;
+        &>*{
+            flex-basis: 50%;
+        }
+    }
+    .message-container{
+        font-weight: bold;
+        font-size: 25px;
+        line-height: 120%;
+        color: $delete;
+        max-width: 500px;
+        text-align: left;
+
+    }
+    .button-row{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+          & > * {
+              
+                margin-right: 20px;
+            }
+    }
+    .delete-btn{
+        margin-left: auto;
     }
 }
 </style>

@@ -1,15 +1,13 @@
 <template>
-    <div class="shelf">
-        <div class="md-layout">
-            <div class="">{{shelf.number}}</div>
-            <div class="folders-container" @mouseover="showCreateBtn = true" @mouseleave="showCreateBtn = false">
-                <div class="create-folder-btn" v-if="showCreateBtn">
-                    <div class="create-icon">+</div>
-                    <div class="create-folder-btn__text">Создать папку</div>
-                </div>
-                <Folder v-for="folder in shelf.folders" :folder="folder" :key="folder.id" />
+    <div class="shelf">        
+        
+        <div class="folders-container" @mouseover="showCreateBtn = true" @mouseleave="showCreateBtn = false">
+            <div class="create-folder-btn" v-if="showCreateBtn">
+                <div class="create-icon">+</div>
+                <div class="create-folder-btn__text">Создать папку</div>
             </div>
-        </div>
+            <Folder @click="onActivate" :active="activate" v-for="folder in shelf.folders" :folder="folder" :key="folder.id" />
+        </div>     
     </div>
 </template>
 <script lang="ts">
@@ -28,18 +26,39 @@ import Folder from './Folder.vue'
 export default class Shelf extends Vue {
     @Prop(Object) public shelf!: ShelfClass[]
 
-    public showCreateBtn: boolean = false
+    public showCreateBtn: boolean = false;
+    public activate = false;
+
+    onActivate () {
+        this.activate= true;
+    }
 }
 </script>
 
 <style lang="scss">
+@import '../styles/colors.scss';
+
+.shelf{
+    position: relative;
+     width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow: visible;
+}
 .folders-container {
-    width: 500px;
-    height: 500px;
+    width: 100%;
+    height: 100%;
     border: 5px solid #E0E0E0;
     padding: 22px;
-    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    overflow: auto;
 
+    &.highlight {
+        border-color: $interactive;
+    }
+    
 }
 
 .create-folder-btn {
@@ -48,6 +67,7 @@ export default class Shelf extends Vue {
     align-items: center;
     top: -24px;
     left: -25px;
+    z-index: 100;
 
     .create-icon {
         width: 45px;

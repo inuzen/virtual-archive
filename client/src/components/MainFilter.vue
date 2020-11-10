@@ -1,7 +1,7 @@
 <template>
   <div class="main-filter">
   <div class="single-row">
-    <ShelfFilter @filterChange="onShelfFilterChange" />
+    <ShelfFilter :showCheckbox="true" @filterChange="onShelfFilterChange" />
     <FolderFilter  @filterChange="onFolderFilterChange" />
   </div>
   <div class="doc-filter-row">

@@ -1,6 +1,6 @@
 <template>
   <div class="filter-container shelf-filter">
-      <div class="checkbox-wrapper" v-on:click="onClick"><input type="checkbox" @input="toggleFilter" v-model="filterValues.enabled" name="" id="">Поиск по полкам</div>
+      <div class="checkbox-wrapper" v-if="showCheckbox" v-on:click="onClick"><input type="checkbox" @input="toggleFilter" v-model="filterValues.enabled" name="" id="">Поиск по полкам</div>
       <div class="filter-row combined-filter">
           <div class="input-wrapper">
               <label for="" class="input-label" :class="{disabled: !filterValues.enabled}">Название шкафа</label>
@@ -29,6 +29,8 @@ import TextInput from '@/components/TextInput.vue'
 })
 export default class ShelfFilter extends Vue {
     // @Model('change', { type: Boolean }) public checked!: boolean
+    @Prop(Boolean) public showCheckbox
+
     
     public shelfNames = ['НТЦ Протей', 'НТЦ Протей2', 'НТЦ Протей3']
     public shelfNumber = [1, 2, 3, 4, 5, 6]
