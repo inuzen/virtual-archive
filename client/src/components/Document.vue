@@ -5,9 +5,19 @@
                     <span class="document__designation">321</span>
                     <span class="document__name">33</span>
                     <div class="document__tags">
-                        <span class="tag">bruh</span>
+                        <div v-for="tag in tags" :key="tag" class="tag">
+                            <span class="tag-text">{{tag}}</span>
+                            <div class="img-wrapper delete-tag">
+                                <img src="../assets/icons/white-cross.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="tag add-tag">+</div>
                     </div>
-                    <button class="delete-btn">-</button>
+                    <div class="delete-button-container" >
+                        <div class="img-wrapper">
+                            <img src="../assets/icons/delete-icon.svg" alt="">
+                        </div>
+                    </div>
                 </div>
                 <div v-if="expand" class="document__description-wrapper">
                     <p class="title">Описание</p>
@@ -24,10 +34,13 @@ import { DocumentClass } from '@/classes/document.ts'
 @Component
 export default class Document extends Vue {
     // @Prop(Object) public document!:  DocumentClass
+    public tags = ['обработано', 'на проверке', 'very long fucking tag for some reason'];
     public expand = false;
-        public onShowDescription (e) {
+    
+    public onShowDescription (e) {
         this.expand = !this.expand
     }
+
 }
 </script>
 
@@ -49,9 +62,50 @@ export default class Document extends Vue {
     &__description-wrapper{
         text-align: left;
         .title{
-                    line-height: 100%;
-        color: $folder;
-        font-weight: bold;
+            line-height: 100%;
+            color: $folder;
+            font-weight: bold;
+        }
+    }
+
+    &__tags {
+        .tag{
+            background-color: $sticker;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 20px;
+            text-align: left;
+            font-weight: bold;
+            width: max-content;
+            color: white;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+            cursor: default;
+            .tag-text{
+                margin-right: 15px;
+                
+            }
+            .delete-tag{
+                width: 100%;
+                max-width: 30px;
+                cursor: pointer;
+            }
+
+        }
+        .add-tag{
+            cursor: pointer;
+            width: min-content;
+            font-size: 35px;
+        }
+    }
+
+    .img-wrapper{
+        img{
+            display: block;
         }
     }
 

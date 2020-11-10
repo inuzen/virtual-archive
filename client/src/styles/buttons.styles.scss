@@ -31,6 +31,14 @@
         height: 40px;
     }
     &.danger {
+        font-weight: bold;
         background-color: $delete;
+    }
+
+    &:disabled {
+        color: $white;
+        background-color: $disabled-fill;
+        pointer-events: none;
+        cursor: default;
     }
 }

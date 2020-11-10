@@ -1,24 +1,39 @@
 <template>
     <div class="folder-modal-wrapper">
-            <div class="folder-title-container">            
-        <div class="folder-title-highlight active">
-        <div class="folder-title-wrapper">
-                <div class="year">2020</div>
-                <div v-if="!folderEditMode" class="name">{{folderInfo.folderName}}</div>
-                <div v-if="!folderEditMode" class="number">{{folderInfo.folderNumber}}</div>
-                <div v-if="folderEditMode" class="name">
-                    <TextInput @input="(val)=>onInputChange(val, 'folderName')" :value='folderInfo.folderName' />
+        <div class="folder-title-container">            
+            <div class="folder-title-highlight active">
+                <div class="folder-title-wrapper">
+                    <div class="year">2020</div>
+                    <div v-if="!folderEditMode" class="name">{{folderInfo.folderName}}</div>
+                    <div v-if="!folderEditMode" class="number">{{folderInfo.folderNumber}}</div>
+                    <div v-if="folderEditMode" class="name">
+                        <TextInput @input="(val)=>onInputChange(val, 'folderName')" :value='folderInfo.folderName' />
+                    </div>
+                    <div v-if="folderEditMode" class="number">
+                        <TextInput @input="(val)=>onInputChange(val, 'folderNumber')" :value='folderInfo.folderNumber' />
+                    </div>
                 </div>
-                <div v-if="folderEditMode" class="number">
-                    <TextInput @input="(val)=>onInputChange(val, 'folderNumber')" :value='folderInfo.folderNumber' />
+            </div>
+            <div class="edit-button-container" @click="editModeOn" v-if="!folderEditMode">
+                <div class="img-wrapper">
+                    <img src="../assets/icons/edit-icon.svg" alt="">
                 </div>
             </div>
         </div>
-        <div class="edit-button-container" @click="toggle">
-            <div class="img-wrapper">
-                <img src="../assets/icons/edit-icon.svg" alt="">
+        <div v-if="folderEditMode" class="folder-edit-container">
+            <p class="label">Переместить в</p>
+            <div class="folder-actions-row">
+                <div class="actions"></div>
+                <div v-if="markForDelete" class="message-container">
+                    Удаление папки вступит в силу после сохранения изменений, все данные в этой папке будут потерены
+                </div>
             </div>
-        </div>
+            <div class="button-row">
+                <button @click="onClose" class="btn slim secondary">Отменить</button>
+                <button @click="onClickSave" class="btn slim primary">Сохранить</button>
+                <button @click="onDeleteFolder" class="btn slim danger delete-btn" :disabled="markForDelete">Удалить</button>
+
+            </div>
         </div>
         <div class="subfolder-row">
             <div class="subfolder"></div>
@@ -61,6 +76,7 @@ export default class OpenFolderModal extends Vue {
         folderName: 'test',
         folderNumber: 'abc2d',
     }
+    public markForDelete = false;
     public onInputChange (value, inputName) {
         this.folderInfo[inputName] = value
         
@@ -79,6 +95,17 @@ export default class OpenFolderModal extends Vue {
     public toggle () {
         this.folderEditMode = !this.folderEditMode;
     }
+
+    public onClickSave () {
+        this.$emit('change-folder')
+    }
+    public onClose () {       
+        this.folderEditMode = false;
+        this.markForDelete = false
+    } 
+    public onDeleteFolder () {       
+        this.markForDelete = true;
+    } 
 
 }
 </script>
