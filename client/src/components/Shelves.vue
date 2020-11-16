@@ -15,56 +15,64 @@
 
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import Shelf from './Shelf.vue'
-
+import {mapState} from "vuex";
 @Component({
     components: {
         Shelf,
     },
+    computed: {...mapState(['shelves'])},
+    created() {
+    this.$store.dispatch('loadShelves');
+  }
 })
 export default class Shelves extends Vue {
-    public shelves: any[] = [];
+    
+    public shelves2: any = []
     public showFolderModal = false;
     constructor() {
         super();
 
-        for (let index = 0; index < 18; index++) {
-            this.shelves.push(
-                {
-            name: 'шкаф',
-            id: this.getRInt(index+1*10, (index+1)*100),
-            number: index+1,
-            folders: <any[]> [
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
-                { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(index*10, (index+1)*100)},
-                { name: 'Длинное название', year: 2020, number:this.getRInt(1000, 99999), id: 1243*index, format:'A3'},
-                { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: 322*index}
-            ],
-        }
-                )
+        console.log(this.$store.state.shelves);
+        
+
+        // for (let index = 0; index < 18; index++) {
+        //     this.shelves.push(
+        //         {
+        //     name: 'шкаф',
+        //     id: this.getRInt(index+1*10, (index+1)*100),
+        //     number: index+1,
+        //     folders: <any[]> [
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         // { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(0, index*100)},
+        //         { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: this.getRInt(index*10, (index+1)*100)},
+        //         { name: 'Длинное название', year: 2020, number:this.getRInt(1000, 99999), id: 1243*index, format:'A3'},
+        //         { name: 'folder name', year: 2020, number:this.getRInt(1000, 99999), id: 322*index}
+        //     ],
+        // }
+        //         )
             
-        }
+        // }
     }
 
     getRInt(min, max) {

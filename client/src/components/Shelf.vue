@@ -6,7 +6,7 @@
                 <div class="create-icon">+</div>
                 <div class="create-folder-btn__text">Создать папку</div>
             </div>
-            <Folder @click="onActivate" :active="activate" v-for="folder in shelf.folders" :folder="folder" :key="folder.id" />
+            <Folder @click="onActivate" :active="activate" v-for="folder in shelf.Folders" :folder="folder" :key="folder.id" />
         </div>     
     </div>
 </template>
@@ -25,6 +25,12 @@ import Folder from './Folder.vue'
 })
 export default class Shelf extends Vue {
     @Prop(Object) public shelf!: ShelfClass[]
+
+    constructor () {
+        super()
+        console.log(this.shelf);
+        
+    }
 
     public showCreateBtn: boolean = false;
     public activate = false;
