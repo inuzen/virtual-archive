@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <MainFilter />
-    <Shelves :key="2"/>
+    <Shelves/>
   </div>
 </template>
 
@@ -22,5 +22,8 @@ export default class Home extends Vue {}
 .home{
   
  
+}
+.md-dialog-container{
+    max-height: 95% !important
 }
 </style>

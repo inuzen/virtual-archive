@@ -53,11 +53,10 @@
                 <span>Стикер</span>
             </div>
             <div class="document-list">
-                <Document/>
-                <Document/>
+                <Document v-for="doc in documents" :key="doc.id" :document="doc" />
             </div>
         </div>
-        <md-dialog :md-active.sync="showDocumentModal"><DocumentModal @closeDocModal='closeDocModal'/></md-dialog>
+        <md-dialog :md-active.sync="showDocumentModal"><DocumentModal :folderId="folder.id" @closeDocModal='closeDocModal'/></md-dialog>
     </div>
 </template>
 
@@ -67,17 +66,19 @@ import Document from '@/components/Document.vue'
 import TextInput from '@/components/TextInput.vue'
 import DocumentModal from '@/components/dialogs/DocumentModal.vue'
 import ShelfFilter from '@/components/filters/ShelfFilter.vue'
-import { FolderClass } from '@/classes/folder.ts'
+import {mapState} from "vuex";
+
 @Component({
   components: {
     Document,
     DocumentModal,
     TextInput,
     ShelfFilter
-    }
+    },
+    computed: {...mapState(['documents'])},
 })
 export default class OpenFolderModal extends Vue {
-    @Prop(Object) public folder!: FolderClass;
+    @Prop(Object) public folder;
 
     public folderEditMode = false;
     public showDocumentModal = false;
@@ -93,6 +94,12 @@ export default class OpenFolderModal extends Vue {
             this.folderInfo.folderName = this.folder.name;
             this.folderInfo.folderNumber = this.folder.number;
             this.folderInfo.folderYear = this.folder.year;
+        }
+    }
+
+    created () {
+        if (this.folder) {            
+            this.$store.dispatch('getDocumentsByFolder', this.folder.id);
         }
     }
 
@@ -146,10 +153,11 @@ export default class OpenFolderModal extends Vue {
         display: block;
     }
 }
+
 .folder-modal-wrapper{
     width: 100%;
     max-width: 1590px;
-    height: 80%;
+    height: 95%;
     overflow-y: auto;
     box-shadow: $shadow;
     padding: 70px 90px;

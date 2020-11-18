@@ -1,7 +1,7 @@
 <template>
     <div class="shelf">        
         
-        <div class="folders-container" @mouseover="showCreateBtn = true" @mouseleave="showCreateBtn = false">
+        <div class="folders-container" @click="onShelfClick" @mouseover="showCreateBtn = true" @mouseleave="showCreateBtn = false">
             <div class="create-folder-btn" v-if="showCreateBtn">
                 <div class="create-icon">+</div>
                 <div class="create-folder-btn__text">Создать папку</div>
@@ -14,8 +14,6 @@
 
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-import { ShelfClass } from '@/classes/shelf.ts'
-
 import Folder from './Folder.vue'
 
 @Component({
@@ -24,12 +22,10 @@ import Folder from './Folder.vue'
     },
 })
 export default class Shelf extends Vue {
-    @Prop(Object) public shelf!: ShelfClass[]
+    @Prop(Object) public shelf
 
     constructor () {
-        super()
-        console.log(this.shelf);
-        
+        super()        
     }
 
     public showCreateBtn: boolean = false;
@@ -37,6 +33,12 @@ export default class Shelf extends Vue {
 
     onActivate () {
         this.activate= true;
+    }
+    onShelfClick() {
+        if (this.shelf) {
+            const {id, name, number} = this.shelf;
+            this.$store.dispatch('setCurrentShelf', {id , name, number})
+        }
     }
 }
 </script>

@@ -13,13 +13,12 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import OpenFolderModal from '@/components/OpenFolderModal.vue'
 
-import { FolderClass } from '@/classes/folder.ts'
 
 @Component({
     components: {OpenFolderModal}
 })
 export default class Folder extends Vue {
-    @Prop(Object) public folder!: FolderClass;
+    @Prop(Object) public folder;
 
     public showFolderModal = false;
 

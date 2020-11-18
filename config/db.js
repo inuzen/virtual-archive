@@ -51,7 +51,7 @@ const connectDB = async () => {
         if (shelves.length < 18) {
             await sequelize.sync({ force: true });
             createShelves();
-            console.log('The number if shelves was less than required so the whole db was recreated');
+            console.log('The number of shelves was less than required so the whole db was recreated');
         }
     } catch (err) {
         console.error(err.message);

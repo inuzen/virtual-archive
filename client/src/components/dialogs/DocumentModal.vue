@@ -2,12 +2,14 @@
     <div class="edit-modal document-modal">
         <header class="modal-title">новый документ</header>
         <div class="modal-content">
-            <p class="modal-info shelf">НТВ ПРОМЕТЕЙ №1</p>
+            <p class="modal-info shelf">{{currentShelf.name}}</p>
             <p class="modal-info">Папка №66666</p>
             <div class='form-container'>
-                <TextInput :label="'Инв №'" @input="(val)=>onInputChange(val, 'docNumber')"  />
-                <TextInput :label="'Обозначение'" @input="(val)=>onInputChange(val, 'docDesignation')" />
-                <TextInput :label="'Название'" @input="(val)=>onInputChange(val, 'docName')" />
+                <TextInput :label="'Инв №'" @input="(val)=>onInputChange(val, 'name')"  />
+                <TextInput :label="'Обозначение'" @input="(val)=>onInputChange(val, 'number')" />
+                <TextInput :label="'Название'" @input="(val)=>onInputChange(val, 'designation')" />
+                <TextInput :label="'Описание'" @input="(val)=>onInputChange(val, 'description')" />
+                <TextInput :label="'Теги'" @input="(val)=>onInputChange(val, 'tags')" />
             <div class="button-row">
                 <button @click="onClose" class="btn slim secondary">Отменить</button>
                 <button @click="onClickSave" class="btn slim primary">Сохранить</button>
@@ -19,19 +21,23 @@
 <script lang="ts">
 
 import { Component, Prop, Vue } from 'vue-property-decorator'
-
+import {mapState} from "vuex";
 import TextInput from '@/components/TextInput.vue'
 
 @Component({
   components: {
     TextInput,
-    }
+    },
+    computed: {...mapState(['currentShelf'])}
 })
 export default class DocumentModal extends Vue {
+    @Prop() public folderId; 
     private initialValues = {
-        docName: '',
-        docNumber: '',
-        docDesignation: '',
+        name: '',
+        number: '',
+        designation: '',
+        description: '',
+        tags: '',
     }
     
     public documentValues = this.initialValues;
@@ -40,7 +46,12 @@ export default class DocumentModal extends Vue {
         this.documentValues[inputName] = value                
     }
     public onClickSave () {
-        this.$emit('change-document', this.documentValues)
+        // console.log({...this.documentValues, tags: this.documentValues.tags.split(','), FolderId: this.folderId});
+        
+        this.$store.dispatch('addDocument', {...this.documentValues, tags: this.documentValues.tags ? this.documentValues.tags.split(',') : [], folderId: this.folderId});
+        // this.$emit('change-document', this.documentValues)
+        this.$emit('closeDocModal');
+
     }
     public onClose () {
         this.documentValues = {...this.initialValues}
@@ -50,6 +61,6 @@ export default class DocumentModal extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/edit-modal.styles.scss'
+@import '../../styles/edit-modal.styles.scss';
 
 </style>

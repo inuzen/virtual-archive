@@ -13,6 +13,51 @@ router.get('/', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
+router.get('/byFolder/:folderId', async (req, res) => {
+    try {
+        const docs = await Document.findAll({
+            where: {
+                FolderId: req.params.folderId,
+            },
+        });
+
+        res.json(docs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.post('/findDocument', async (req, res) => {
+    try {
+        const { name, number, designation, folderId } = req.body;
+
+        let searchObj = {};
+        if (name) {
+            searchObj.name = { [Op.substring]: name.toLowerCase() };
+        }
+        if (designation) {
+            searchObj.year = { [Op.substring]: designation.toLowerCase() };
+        }
+        if (number) {
+            searchObj.number = { [Op.substring]: number.toLowerCase() };
+        }
+        if (folderId) {
+            searchObj.FolderId = folderId;
+        }
+
+        const docs = await Document.findAll({
+            where: searchObj,
+        });
+
+        res.json(docs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
+
 router.get('/:id', async (req, res) => {
     try {
         const doc = await Document.findOne({
@@ -27,46 +72,15 @@ router.get('/:id', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-router.get('/findDocument', async (req, res) => {
-    try {
-        const { name, number, designation } = req.body;
-
-        let searchObj = {};
-        if (name) {
-            searchObj.name = { [Op.substring]: name.toLowerCase() };
-        }
-        if (designation) {
-            searchObj.year = { [Op.substring]: designation.toLowerCase() };
-        }
-        if (number) {
-            searchObj.number = { [Op.substring]: number.toLowerCase() };
-        }
-
-        const docs = await Document.findAll({
-            where: searchObj,
-            include: {
-                model: Folder,
-                where: {
-                    id: 1,
-                },
-            },
-        });
-
-        res.json(docs);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server Error');
-    }
-});
-// @route     POST api/folders
-// @desc      Create a folder
+// @route     POST api/documents
+// @desc      Create a document
 // @access    Public
 router.post('/', async (req, res) => {
     try {
-        const { name, number, designation, description, tags, folderID } = req.body;
+        const { name, number, designation, description, tags, folderId } = req.body;
 
-        if (!name || !folderID) {
-            res.send(400).send('Either name or folderID is missing!');
+        if (!name || !folderId) {
+            res.send(400).send('Either name or folderId is missing!');
         }
         const document = await Document.create({
             name: name.toLowerCase(),
@@ -74,7 +88,7 @@ router.post('/', async (req, res) => {
             designation: designation ? designation.toLowerCase() : '',
             description: description ? description.toLowerCase() : '',
             tags: tags ? tags : [],
-            FolderId: folderID,
+            FolderId: folderId,
         });
 
         // await user.save();
@@ -90,10 +104,10 @@ router.post('/', async (req, res) => {
 // @access    Public
 router.put('/:id', async (req, res) => {
     try {
-        const { name, number, designation, description, tags, folderID } = req.body;
+        const { name, number, designation, description, tags, folderId } = req.body;
 
-        if (!name || !folderID) {
-            res.send(400).send('Either name or folderID is missing!');
+        if (!name || !folderId) {
+            res.send(400).send('Either name or folderId is missing!');
         }
         const document = await Document.update(
             {
@@ -102,7 +116,7 @@ router.put('/:id', async (req, res) => {
                 designation,
                 description,
                 tags,
-                FolderId: folderID,
+                FolderId: folderId,
             },
             {
                 where: {

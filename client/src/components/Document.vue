@@ -1,11 +1,11 @@
 <template>
             <div class="document">
                 <div class="document__main-info" @click="onShowDescription">
-                    <span class="document__name">123</span>
-                    <span class="document__designation">321</span>
-                    <span class="document__name">33</span>
+                    <span class="document__name">{{document.name}}</span>
+                    <span class="document__designation">{{document.designation}}</span>
+                    <span class="document__name">{{document.number}}</span>
                     <div class="document__tags">
-                        <div v-for="tag in tags" :key="tag" class="tag">
+                        <div v-for="tag in document.tags" :key="tag" class="tag">
                             <span class="tag-text">{{tag}}</span>
                             <div class="img-wrapper delete-tag">
                                 <img src="../assets/icons/white-cross.svg" alt="">
@@ -21,19 +21,18 @@
                 </div>
                 <div v-if="expand" class="document__description-wrapper">
                     <p class="title">Описание</p>
-                    <p >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt, necessitatibus soluta quibusdam similique exercitationem ad. Expedita fuga vel maxime repudiandae, facilis possimus unde natus!</p>
+                    <p >{{document.description}}</p>
                 </div>            
             </div>
 </template>
 <script lang="ts">
 
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { DocumentClass } from '@/classes/document.ts'
 
 
 @Component
 export default class Document extends Vue {
-    // @Prop(Object) public document!:  DocumentClass
+    @Prop(Object) public document
     public tags = ['обработано', 'на проверке', 'very long fucking tag for some reason'];
     public expand = false;
     
@@ -69,6 +68,12 @@ export default class Document extends Vue {
     }
 
     &__tags {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
         .tag{
             background-color: $sticker;
             padding: 5px;
@@ -82,7 +87,7 @@ export default class Document extends Vue {
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
+            margin-right: 10px;
             margin-bottom: 10px;
             cursor: default;
             .tag-text{
