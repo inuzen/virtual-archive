@@ -25,8 +25,7 @@ import {mapState} from "vuex";
         Shelf,
     },
     created () {
-        // this.$store.dispatch('loadShelves')
-        this.$store.dispatch('loadShelvesWithFolders')
+        this.$store.dispatch('loadShelvesWithFolders');        
     },
     computed: {...mapState(['shelvesMap', 'columnNames'])},
 
@@ -66,5 +65,6 @@ export default class Shelves extends Vue {
     grid-template-rows: repeat(6, 500px);
     grid-gap: 40px;
     }
+    margin-bottom: 50px;
 }
 </style>

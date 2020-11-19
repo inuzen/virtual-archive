@@ -24,7 +24,15 @@ router.get('/', async (req, res) => {
 });
 router.get('/withFolders', async (req, res) => {
     try {
-        const shelves = await Shelf.findAll({ include: Folder });
+        const shelves = await Shelf.findAll({
+            include: {
+                model: Folder,
+                required: false,
+                where: {
+                    isSubFolder: false,
+                },
+            },
+        });
 
         res.json(shelves);
     } catch (error) {

@@ -8,10 +8,10 @@
 <style lang="scss">
 @import "~vue-material/dist/theme/engine";
 
-// @include md-register-theme("default", (
-//   primary: #02AEB9, // The primary color of your application
-//   accent: #B8E6E9 // The accent or secondary color
-// ));
+@include md-register-theme("default", (
+  primary: #1bc3ce, // The primary color of your application
+  accent: #B8E6E9 // The accent or secondary color
+));
 
 @import "~vue-material/dist/theme/all";
 @import './styles/main.scss';

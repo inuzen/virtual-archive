@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import { documentActions } from './document.actions';
+import { folderActions } from './folder.actions';
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 
@@ -16,6 +18,7 @@ export default new Vuex.Store({
         documents: [],
         currentShelf: null,
         currentFolder: null,
+        currentSubFolder: null,
         currentDocument: null,
     },
     actions: {
@@ -35,46 +38,6 @@ export default new Vuex.Store({
                 throw new Error(`API ${error}`);
             }
         },
-        async getDocumentsByFolder({ commit }, folderId) {
-            try {
-                const res = await Vue.axios.get(`documents/byFolder/${folderId}`);
-                commit('SET_DOCUMENTS', res.data);
-            } catch (error) {
-                throw new Error(`API ${error}`);
-            }
-        },
-        async addFolder({ commit }, payload) {
-            try {
-                const res = await Vue.axios.post('folders', payload);
-                commit('ADD_FOLDER', res.data);
-            } catch (error) {
-                throw new Error(`API ${error}`);
-            }
-        },
-        async addDocument({ commit }, payload) {
-            try {
-                const res = await Vue.axios.post('documents', payload);
-                commit('ADD_DOCUMENT', res.data.document);
-            } catch (error) {
-                throw new Error(`API ${error}`);
-            }
-        },
-        async findDocument({ commit }, payload) {
-            try {
-                const res = await Vue.axios.post('documents/findDocument', payload);
-                commit('FIND_DOCUMENT', res.data);
-            } catch (error) {
-                throw new Error(`API ${error}`);
-            }
-        },
-        async findFolder({ commit }, payload) {
-            try {
-                const res = await Vue.axios.post('folders/findFolder', payload);
-                commit('FIND_FOLDER', res.data);
-            } catch (error) {
-                throw new Error(`API ${error}`);
-            }
-        },
         async findShelf({ commit }, payload) {
             try {
                 const res = await Vue.axios.post('shelves/findShelf', payload);
@@ -84,12 +47,18 @@ export default new Vuex.Store({
             }
         },
 
+        ...documentActions,
+        ...folderActions,
+
         //local state actions
         setCurrentShelf({ commit }, shelf) {
             commit('SET_CURRENT_SHELF', shelf);
         },
         setCurrentFolder({ commit }, folder) {
             commit('SET_CURRENT_FOLDER', folder);
+        },
+        setCurrentSubfolder({ commit }, subfolder) {
+            commit('SET_CURRENT_SUBFOLDER', subfolder);
         },
         setCurrentDocument({ commit }, document) {
             commit('SET_CURRENT_DOCUMENT', document);
@@ -125,14 +94,18 @@ export default new Vuex.Store({
         SET_CURRENT_FOLDER(state, folder) {
             state.currentFolder = folder;
         },
+        SET_CURRENT_SUBFOLDER(state, folder) {
+            state.currentSubFolder = folder;
+        },
         SET_CURRENT_DOCUMENT(state, document) {
             state.currentDocument = document;
         },
 
         ADD_DOCUMENT(state, newDoc) {
-            console.log(newDoc);
-
             state.documents.push(newDoc);
+        },
+        ADD_FOLDER(state, { folder, shelf }) {
+            state.shelvesMap[shelf.name].find((s) => s.number === shelf.number).Folders.push(folder);
         },
     },
     modules: {},

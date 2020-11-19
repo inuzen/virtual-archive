@@ -5,7 +5,7 @@
           <div class="input-wrapper">
               <label for="" class="input-label" :class="{disabled: !filterValues.enabled}">Название шкафа</label>
               <select @change="onNameChange" class="input-select no-right-border" :disabled="!filterValues.enabled" name="" id="">
-                  <option v-for="item in shelfNames" :key="item" :value="item">{{item}}</option>                  
+                  <option v-for="item in columnNames" :key="item" :value="item">{{item}}</option>                  
               </select>
           </div>
           <div class="input-wrapper">
@@ -20,19 +20,20 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Model } from 'vue-property-decorator'
+import {mapState} from "vuex";
 import TextInput from '@/components/TextInput.vue'
 
 @Component({
   components: {
     TextInput,
-    }
+    },
+    computed: {...mapState(['columnNames'])},
+
 })
 export default class ShelfFilter extends Vue {
     // @Model('change', { type: Boolean }) public checked!: boolean
     @Prop(Boolean) public showCheckbox
 
-    
-    public shelfNames = ['НТЦ Протей', 'НТЦ Протей2', 'НТЦ Протей3']
     public shelfNumber = [1, 2, 3, 4, 5, 6]
     
     public filterValues = {

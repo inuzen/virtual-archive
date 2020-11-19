@@ -1,24 +1,27 @@
 <template>
-    <div class="shelf">        
-        
+    <div class="shelf">
         <div class="folders-container" @click="onShelfClick" @mouseover="showCreateBtn = true" @mouseleave="showCreateBtn = false">
-            <div class="create-folder-btn" v-if="showCreateBtn">
+            <div class="create-folder-btn" v-if="showCreateBtn" @click="onAddFolder">
                 <div class="create-icon">+</div>
                 <div class="create-folder-btn__text">Создать папку</div>
             </div>
             <Folder @click="onActivate" :active="activate" v-for="folder in shelf.Folders" :folder="folder" :key="folder.id" />
-        </div>     
+        </div>
+        <md-dialog v-if="showCreateBtn || showNewFolderModal" :md-active.sync="showNewFolderModal"><FolderModal @closeFolderModal='closeFolderModal'/></md-dialog>
+
     </div>
 </template>
 <script lang="ts">
 
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import FolderModal from '@/components/dialogs/FolderModal.vue'
 
 import Folder from './Folder.vue'
 
 @Component({
     components: {
         Folder,
+        FolderModal
     },
 })
 export default class Shelf extends Vue {
@@ -27,10 +30,12 @@ export default class Shelf extends Vue {
     constructor () {
         super()        
     }
-
+    public showNewFolderModal = false;
     public showCreateBtn: boolean = false;
     public activate = false;
-
+    public closeFolderModal () {
+        this.showNewFolderModal=false;
+    }
     onActivate () {
         this.activate= true;
     }
@@ -39,6 +44,10 @@ export default class Shelf extends Vue {
             const {id, name, number} = this.shelf;
             this.$store.dispatch('setCurrentShelf', {id , name, number})
         }
+    }
+    onAddFolder(){
+        this.showNewFolderModal=true;
+
     }
 }
 </script>

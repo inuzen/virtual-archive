@@ -1,11 +1,11 @@
 <template>
-    <div class="folder" :class="folder.format">
+    <div class="folder" :class="folder.format" @mouseover="renderDialog = true" @mouseleave="renderDialog = false">
         <div @click="onShowFolderModal" class="folder-container md-layout md-alignment-center-space-between" >
             <div class="folder__year"><span>{{ folder.year }}</span></div>
             <div>{{ folder.name }}</div>
             <div class="folder__number">{{ folder.number }}</div>
         </div>
-        <md-dialog :md-active.sync="showFolderModal"><OpenFolderModal :folder="folder" @closeFolderModal='closeFolderModal'/></md-dialog>
+        <md-dialog v-if="renderDialog || showFolderModal" :md-active.sync="showFolderModal"><OpenFolderModal :folder="folder" @closeFolderModal='closeFolderModal'/></md-dialog>
     </div>
 </template>
 <script lang="ts">
@@ -21,6 +21,7 @@ export default class Folder extends Vue {
     @Prop(Object) public folder;
 
     public showFolderModal = false;
+    public renderDialog = false;
 
     onShowFolderModal () {
         this.showFolderModal = true;

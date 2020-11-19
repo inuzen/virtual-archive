@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-router.get('/foldersWithDocuments', async (req, res) => {
+router.get('/folderWithDocuments', async (req, res) => {
     try {
         const folders = await Folder.findAll({
             include: Document,
@@ -25,15 +25,14 @@ router.get('/foldersWithDocuments', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-router.get('/foldersWithDocuments/:id', async (req, res) => {
+router.get('/folderFull/:id', async (req, res) => {
     try {
         const folder = await Folder.findOne({
             where: {
                 id: req.params.id,
             },
-            include: Document,
+            include: [Document, Folder],
         });
-
         res.json(folder);
     } catch (error) {
         console.error(error);
