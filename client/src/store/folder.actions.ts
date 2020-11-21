@@ -12,7 +12,7 @@ export const folderActions = {
     async getFolderById({ commit }, folderId) {
         try {
             const res = await Vue.axios.get(`folders/${folderId}`);
-            commit('SET_DOCUMENTS', res.data);
+            commit('SET_FOLDERS', res.data);
         } catch (error) {
             throw new Error(`API ${error}`);
         }
@@ -25,10 +25,18 @@ export const folderActions = {
             throw new Error(`API ${error}`);
         }
     },
+    async getSubfolder({ commit }, folderId) {
+        try {
+            const res = await Vue.axios.get(`folders/folderFull/${folderId}`);
+            commit('SET_CURRENT_SUBFOLDER', res.data);
+        } catch (error) {
+            throw new Error(`API ${error}`);
+        }
+    },
     async findFolder({ commit }, payload) {
         try {
             const res = await Vue.axios.post('folders/findFolder', payload);
-            commit('FIND_FOLDER', res.data);
+            commit('SET_HIGH_FOLDERS', res.data);
         } catch (error) {
             throw new Error(`API ${error}`);
         }

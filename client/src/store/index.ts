@@ -18,8 +18,15 @@ export default new Vuex.Store({
         documents: [],
         currentShelf: null,
         currentFolder: null,
-        currentSubFolder: null,
+        currentFolderId: null,
+        currentSubfolderId: null,
+        currentSubfolder: null,
+        showFolderView: false,
+        showSubfolderView: false,
         currentDocument: null,
+        highlightedShelfs: [],
+        highlightedFolders: [],
+        highlightedDocuments: [],
     },
     actions: {
         async loadShelves({ commit }) {
@@ -60,8 +67,29 @@ export default new Vuex.Store({
         setCurrentSubfolder({ commit }, subfolder) {
             commit('SET_CURRENT_SUBFOLDER', subfolder);
         },
+        setCurrentFolderId({ commit }, folderId) {
+            commit('SET_CURRENT_FOLDER_ID', folderId);
+        },
+        setCurrentSubfolderId({ commit }, subfolderId) {
+            commit('SET_CURRENT_SUBFOLDER_ID', subfolderId);
+        },
         setCurrentDocument({ commit }, document) {
             commit('SET_CURRENT_DOCUMENT', document);
+        },
+        toggleFolderView({ commit }) {
+            commit('TOGGLE_FOLDER');
+        },
+        toggleSubfolderView({ commit }) {
+            commit('TOGGLE_SUBFOLDER');
+        },
+        setHighlightedShelfs({ commit }, shelfIdArr) {
+            commit('SET_HIGH_SHELFS', shelfIdArr);
+        },
+        setHighlightedFolders({ commit }, folderIdArr) {
+            commit('SET_HIGH_FOLDERS', folderIdArr);
+        },
+        setHighlightedDocuments({ commit }, docIdArr) {
+            commit('SET_HIGH_DOCS', docIdArr);
         },
     },
     mutations: {
@@ -95,17 +123,40 @@ export default new Vuex.Store({
             state.currentFolder = folder;
         },
         SET_CURRENT_SUBFOLDER(state, folder) {
-            state.currentSubFolder = folder;
+            state.currentSubfolder = folder;
+        },
+        SET_CURRENT_FOLDER_ID(state, folderId) {
+            state.currentFolderId = folderId;
+        },
+        SET_CURRENT_SUBFOLDER_ID(state, subfolderId) {
+            state.currentSubfolderId = subfolderId;
         },
         SET_CURRENT_DOCUMENT(state, document) {
             state.currentDocument = document;
         },
-
         ADD_DOCUMENT(state, newDoc) {
             state.documents.push(newDoc);
         },
         ADD_FOLDER(state, { folder, shelf }) {
             state.shelvesMap[shelf.name].find((s) => s.number === shelf.number).Folders.push(folder);
+        },
+        // FIND_FOLDER(state, res) {
+        //     state.high
+        // },
+        TOGGLE_FOLDER(state) {
+            state.showFolderView = !state.showFolderView;
+        },
+        TOGGLE_SUBFOLDER(state) {
+            state.showSubfolderView = !state.showSubfolderView;
+        },
+        SET_HIGH_SHELFS(state, payload) {
+            state.highlightedShelfs = payload;
+        },
+        SET_HIGH_FOLDERS(state, payload) {
+            state.highlightedFolders = payload;
+        },
+        SET_HIGH_DOCS(state, payload) {
+            state.highlightedDocuments = payload;
         },
     },
     modules: {},

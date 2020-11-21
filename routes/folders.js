@@ -39,7 +39,8 @@ router.get('/folderFull/:id', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-router.get('/findFolder', async (req, res) => {
+//returns and array of matching folder IDs
+router.post('/findFolder', async (req, res) => {
     try {
         const { name, year, number, format } = req.body;
 
@@ -60,8 +61,15 @@ router.get('/findFolder', async (req, res) => {
         const folders = await Folder.findAll({
             where: searchObj,
         });
+        const high = folders.reduce((acc, curr) => {
+            acc.push(curr.id);
+            if (curr.isSubFolder) {
+                acc.push(curr.parentFolderId);
+            }
+            return acc;
+        }, []);
 
-        res.json(folders);
+        res.json([...new Set(high)]);
     } catch (error) {
         console.error(error);
         res.status(500).send('Server Error');
