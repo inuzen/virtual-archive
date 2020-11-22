@@ -27,11 +27,13 @@
     export default class MainFilter extends Vue {
         @Action setHighlightedShelfs;
         @Action findFolder;
+        @Action clearFilters;
         @State shelvesMap;
-        public shelfFilter: any = { enabled: true };
-        public folderFilter: any = { enabled: false };
-        public documentFilter: any = { enabled: false };
-
+        @State filterValues;
+        //public shelfFilter: any = { enabled: true };
+        //public folderFilter: any = { enabled: false };
+        //public documentFilter: any = { enabled: false };
+/*      //TODO change this to enabling them, move filter change to vuex
         public onShelfFilterChange(filterValues) {
             this.shelfFilter = filterValues;
         }
@@ -41,8 +43,8 @@
         public onDocFilterChange(filterValues) {
             this.documentFilter = filterValues;
         }
-        public async onClick() {
-            console.log(this.shelfFilter.name);
+   */
+        public async onClick() {            
             if (this.shelfFilter.enabled && !this.folderFilter.enabled && !this.documentFilter.enabled) {
                 const foo = this.shelvesMap[this.shelfFilter.name]
                     .map((shelf: any) => {
@@ -56,14 +58,12 @@
             if (this.folderFilter.enabled) {
                 this.findFolder(this.folderFilter);
             }
-            const bruh = await fetch('fdsa', {
-                method: 'POST',
-                body: JSON.stringify({
-                    shelf: this.shelfFilter,
-                    folder: this.folderFilter,
-                    document: this.documentFilter,
-                }),
-            });
+            if(this.documentFilterEnabled){
+                this.findDocument(this.filterValues.documentFilter);
+            }
+        }
+        public onClearFilters () {
+            this.clearFilters();
         }
     }
 </script>
