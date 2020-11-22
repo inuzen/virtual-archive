@@ -91,6 +91,9 @@ export default new Vuex.Store({
         setHighlightedDocuments({ commit }, docIdArr) {
             commit('SET_HIGH_DOCS', docIdArr);
         },
+        clearFilters({ commit }) {
+            commit('CLEAR_FILTERS');
+        },
     },
     mutations: {
         SET_SHELVES(state, shelves) {
@@ -158,6 +161,12 @@ export default new Vuex.Store({
         SET_HIGH_DOCS(state, payload) {
             state.highlightedDocuments = payload;
         },
+        CLEAR_FILTERS(state){
+            state.highlightedDocuments = [];
+            state.highlightedFolders = [];
+            state.highlightedShelfs = [];
+        }
+           
     },
     modules: {},
 });
