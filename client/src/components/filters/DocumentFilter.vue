@@ -1,32 +1,23 @@
 <template>
     <div class="filter-container shelf-filter">
         <div class="checkbox-wrapper" v-on:click="onClick">
-            <input type="checkbox" @input="toggleFilter" v-model="filterValues.enabled" name="" id="" />Поиск по
-            документам
+            <input type="checkbox" v-model="enabled" name="" id="" />Поиск по документам
         </div>
         <div class="filter-row">
-            <TextInput
-                :label="'Инв №'"
-                @input="(val) => onInputChange(val, 'number')"
-                :disabled="!filterValues.enabled"
-            />
+            <TextInput :label="'Инв №'" @input="(val) => onInputChange(val, 'number')" :disabled="!enabled" />
             <TextInput
                 :label="'Обозначение'"
                 @input="(val) => onInputChange(val, 'designation')"
-                :disabled="!filterValues.enabled"
+                :disabled="!enabled"
             />
-            <TextInput
-                :label="'Название'"
-                @input="(val) => onInputChange(val, 'name')"
-                :disabled="!filterValues.enabled"
-            />
+            <TextInput :label="'Название'" @input="(val) => onInputChange(val, 'name')" :disabled="!enabled" />
         </div>
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Prop, Vue } from 'vue-property-decorator';
-
+    import { State, Action } from 'vuex-class';
     import TextInput from '@/components/TextInput.vue';
 
     @Component({
@@ -35,27 +26,37 @@
         },
     })
     export default class DocumentFilter extends Vue {
-        public filterValues = {
-            enabled: false,
+        @Prop(Boolean) public enabled;
+        @Action setDocumentFilter;
+        @State documentFilter;
+
+        private filterValues;
+
+        public emptyFilter = {
             name: '',
             number: '',
             designation: '',
         };
         created() {
-            this.$emit('filterChange', this.filterValues);
+            this.setDocumentFilter(this.emptyFilter);
+            this.filterValues = this.documentFilter;
         }
-        public toggleFilter() {
-            this.$emit('toggleChkbx', this.filterValues.enabled);
+        updated() {
+            console.log(this.documentFilter);
+
+            if (this.enabled) {
+                this.setDocumentFilter(this.emptyFilter);
+            } else {
+                this.setDocumentFilter(null);
+            }
         }
         public onClick() {
-            this.filterValues.enabled = !this.filterValues.enabled;
-            this.$emit('toggleChkbx', this.filterValues.enabled);
+            this.$emit('toggleChkbx');
         }
-
         public onInputChange(value, inputName) {
             this.filterValues[inputName] = value;
 
-            this.$emit('filterChange', this.filterValues);
+            this.setDocumentFilter(this.filterValues);
         }
     }
 </script>

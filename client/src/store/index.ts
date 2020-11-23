@@ -27,6 +27,10 @@ export default new Vuex.Store({
         highlightedShelfs: [],
         highlightedFolders: [],
         highlightedDocuments: [],
+        documentFilter: null,
+        folderFilter: null,
+        shelfFilter: null,
+        error: false,
     },
     actions: {
         async loadShelves({ commit }) {
@@ -94,13 +98,24 @@ export default new Vuex.Store({
         clearFilters({ commit }) {
             commit('CLEAR_FILTERS');
         },
+        setDocumentFilter({ commit }, filter) {
+            commit('SET_DOC_FILTER', filter);
+        },
+        setFolderFilter({ commit }, filter) {
+            commit('SET_FOLDER_FILTER', filter);
+        },
+        setShelfFilter({ commit }, filter) {
+            commit('SET_SHELF_FILTER', filter);
+        },
+        toggleError({ commit }) {
+            commit('TOGGLE_ERROR');
+        },
     },
     mutations: {
         SET_SHELVES(state, shelves) {
             state.shelves = shelves;
         },
         SET_SHELVES_MAP(state, shelves) {
-            // state.shelves = shelves;
             let names: any[] = [];
             let shelvesObj = {};
 
@@ -156,17 +171,37 @@ export default new Vuex.Store({
             state.highlightedShelfs = payload;
         },
         SET_HIGH_FOLDERS(state, payload) {
-            state.highlightedFolders = payload;
+            state.highlightedFolders = payload.folders;
+            state.highlightedShelfs = payload.shelves;
         },
         SET_HIGH_DOCS(state, payload) {
             state.highlightedDocuments = payload;
         },
-        CLEAR_FILTERS(state){
+        CLEAR_FILTERS(state) {
+            state.documentFilter = null;
+            state.folderFilter = null;
+            state.shelfFilter = null;
             state.highlightedDocuments = [];
             state.highlightedFolders = [];
             state.highlightedShelfs = [];
-        }
-           
+        },
+        SET_DOC_FILTER(state, filter) {
+            state.documentFilter = filter;
+        },
+        SET_FOLDER_FILTER(state, filter) {
+            state.folderFilter = filter;
+        },
+        SET_SHELF_FILTER(state, filter) {
+            state.shelfFilter = filter;
+        },
+        FIND_DOCUMENT(state, payload) {
+            state.highlightedDocuments = payload.documents;
+            state.highlightedFolders = payload.folders;
+            state.highlightedShelfs = payload.shelves;
+        },
+        TOGGLE_ERROR(state) {
+            state.error = !state.error;
+        },
     },
     modules: {},
 });

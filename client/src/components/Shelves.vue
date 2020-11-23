@@ -14,6 +14,13 @@
         <md-dialog :md-active.sync="showSubfolderView">
             <ViewSubfolder />
         </md-dialog>
+        <md-dialog-confirm
+            :md-active="error"
+            md-title="No matches"
+            md-content="No results matching your search parameters"
+            @md-confirm="toggleError"
+            @md-cancel="toggleError"
+        />
     </div>
 </template>
 <script lang="ts">
@@ -36,9 +43,11 @@
         @State columnNames;
         @State showFolderView;
         @State showSubfolderView;
+        @State error;
         @Action toggleFolderView;
+        @Action toggleError;
         @Action toggleSubfolderView;
-
+        private showErrorDialog = false;
         created() {
             this.$store.dispatch('loadShelvesWithFolders');
         }
@@ -48,6 +57,8 @@
             max = Math.floor(max);
             return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
         }
+
+        public closeAlert() {}
     }
 </script>
 

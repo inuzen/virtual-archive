@@ -36,6 +36,9 @@ export const folderActions = {
     async findFolder({ commit }, payload) {
         try {
             const res = await Vue.axios.post('folders/findFolder', payload);
+            if (!res.data.folders.length) {
+                commit('TOGGLE_ERROR');
+            }
             commit('SET_HIGH_FOLDERS', res.data);
         } catch (error) {
             throw new Error(`API ${error}`);

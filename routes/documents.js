@@ -38,7 +38,7 @@ router.post('/findDocument', async (req, res) => {
             searchObj.name = { [Op.substring]: name.toLowerCase() };
         }
         if (designation) {
-            searchObj.year = { [Op.substring]: designation.toLowerCase() };
+            searchObj.designation = { [Op.substring]: designation.toLowerCase() };
         }
         if (number) {
             searchObj.number = { [Op.substring]: number.toLowerCase() };
@@ -49,9 +49,31 @@ router.post('/findDocument', async (req, res) => {
 
         const docs = await Document.findAll({
             where: searchObj,
+            include: Folder,
         });
 
-        res.json(docs);
+        const high = docs.reduce(
+            (acc, curr) => {
+                acc.documents.push(curr.id);
+                acc.folders.push(curr.Folder.id);
+                acc.shelves.push(curr.Folder.ShelfId);
+                if (curr.Folder.isSubFolder) {
+                    acc.folders.push(curr.Folder.parentFolderId);
+                }
+                return acc;
+            },
+            {
+                documents: [],
+                folders: [],
+                shelves: [],
+            },
+        );
+
+        res.json({
+            documents: high.documents,
+            folders: [...new Set(high.folders)],
+            shelves: [...new Set(high.shelves)],
+        });
     } catch (error) {
         console.error(error);
         res.status(500).send('Server Error');

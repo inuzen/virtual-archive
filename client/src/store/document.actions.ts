@@ -53,6 +53,9 @@ export const documentActions = {
     async findDocument({ commit }, payload) {
         try {
             const res = await Vue.axios.post('documents/findDocument', payload);
+            if (!res.data.documents.length) {
+                commit('TOGGLE_ERROR');
+            }
             commit('FIND_DOCUMENT', res.data);
         } catch (error) {
             throw new Error(`API ${error}`);

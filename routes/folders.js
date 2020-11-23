@@ -61,15 +61,22 @@ router.post('/findFolder', async (req, res) => {
         const folders = await Folder.findAll({
             where: searchObj,
         });
-        const high = folders.reduce((acc, curr) => {
-            acc.push(curr.id);
-            if (curr.isSubFolder) {
-                acc.push(curr.parentFolderId);
-            }
-            return acc;
-        }, []);
+        const high = folders.reduce(
+            (acc, curr) => {
+                acc.folders.push(curr.id);
+                acc.shelves.push(curr.ShelfId);
+                if (curr.isSubFolder) {
+                    acc.push(curr.parentFolderId);
+                }
+                return acc;
+            },
+            {
+                folders: [],
+                shelves: [],
+            },
+        );
 
-        res.json([...new Set(high)]);
+        res.json({ folders: [...new Set(high)], shelves: [...new Set(high.shelves)] });
     } catch (error) {
         console.error(error);
         res.status(500).send('Server Error');

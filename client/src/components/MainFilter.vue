@@ -1,12 +1,13 @@
 <template>
     <div class="main-filter">
         <div class="single-row">
-            <ShelfFilter :showCheckbox="true" @filterChange="onShelfFilterChange" />
-            <FolderFilter @filterChange="onFolderFilterChange" />
+            <ShelfFilter :enabled="shelfFilterEnabled" :showCheckbox="true" @toggleChkbx="onShelfToggle" />
+            <FolderFilter :enabled="folderFilterEnabled" @toggleChkbx="onFolderToggle" />
         </div>
         <div class="doc-filter-row">
-            <DocumentFilter @filterChange="onDocFilterChange" />
+            <DocumentFilter :enabled="documentFilterEnabled" @toggleChkbx="onDocToggle" />
             <button @click="onClick" class="btn primary">ИСКАТЬ</button>
+            <button @click="onClearFilters" class="btn secondary clear-filter">X</button>
         </div>
     </div>
 </template>
@@ -27,48 +28,56 @@
     export default class MainFilter extends Vue {
         @Action setHighlightedShelfs;
         @Action findFolder;
+        @Action findDocument;
         @Action clearFilters;
+        @Action setFolderFilter;
         @State shelvesMap;
         @State filterValues;
-        //public shelfFilter: any = { enabled: true };
-        //public folderFilter: any = { enabled: false };
-        //public documentFilter: any = { enabled: false };
-/*      //TODO change this to enabling them, move filter change to vuex
-        public onShelfFilterChange(filterValues) {
-            this.shelfFilter = filterValues;
+        @State shelfFilter;
+        @State documentFilter;
+        @State folderFilter;
+
+        public shelfFilterEnabled: boolean = false;
+        public folderFilterEnabled: boolean = false;
+        public documentFilterEnabled: boolean = false;
+
+        public onFolderToggle() {
+            this.folderFilterEnabled = !this.folderFilterEnabled;
         }
-        public onFolderFilterChange(filterValues) {
-            this.folderFilter = filterValues;
+        public onDocToggle() {
+            this.documentFilterEnabled = !this.documentFilterEnabled;
         }
-        public onDocFilterChange(filterValues) {
-            this.documentFilter = filterValues;
+        public onShelfToggle() {
+            this.shelfFilterEnabled = !this.shelfFilterEnabled;
         }
-   */
-        public async onClick() {            
-            if (this.shelfFilter.enabled && !this.folderFilter.enabled && !this.documentFilter.enabled) {
-                const foo = this.shelvesMap[this.shelfFilter.name]
+
+        public async onClick() {
+            if (this.shelfFilterEnabled) {
+                const shelfIDs = this.shelvesMap[this.shelfFilter.name]
                     .map((shelf: any) => {
                         if (shelf.number == this.shelfFilter.number) {
                             return shelf.id;
                         }
                     })
                     .filter((e) => e);
-                this.setHighlightedShelfs(foo);
+                this.setHighlightedShelfs(shelfIDs);
             }
-            if (this.folderFilter.enabled) {
+            if (this.folderFilter.enabled && !this.documentFilterEnabled) {
                 this.findFolder(this.folderFilter);
             }
-            if(this.documentFilterEnabled){
-                this.findDocument(this.filterValues.documentFilter);
+            if (this.documentFilterEnabled) {
+                this.findDocument(this.documentFilter);
             }
         }
-        public onClearFilters () {
+        public onClearFilters() {
             this.clearFilters();
         }
     }
 </script>
 
 <style lang="scss">
+    @import '../styles/colors.scss';
+
     .main-filter {
         margin-bottom: 90px;
         .input-wrapper {
@@ -99,6 +108,16 @@
         .btn {
             flex: 1 0;
             max-width: 240px;
+            &.clear-filter {
+                width: 60px;
+                min-width: 60px;
+                max-width: 60px;
+                padding: 18px;
+                line-height: 0;
+                margin-left: 30px;
+                border-color: $delete;
+                color: $delete;
+            }
         }
     }
 </style>
