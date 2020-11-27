@@ -52,6 +52,9 @@
         }
 
         public async onClick() {
+            console.log(this.documentFilterEnabled);
+            console.log(this.folderFilterEnabled);
+
             if (this.shelfFilterEnabled) {
                 const shelfIDs = this.shelvesMap[this.shelfFilter.name]
                     .map((shelf: any) => {
@@ -62,7 +65,7 @@
                     .filter((e) => e);
                 this.setHighlightedShelfs(shelfIDs);
             }
-            if (this.folderFilter.enabled && !this.documentFilterEnabled) {
+            if (this.folderFilterEnabled && !this.documentFilterEnabled) {
                 this.findFolder(this.folderFilter);
             }
             if (this.documentFilterEnabled) {

@@ -73,6 +73,10 @@
         text-align: start;
         width: 50%;
         font-size: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 90px;
         input {
             font-size: 60px;
         }

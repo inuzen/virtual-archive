@@ -41,7 +41,7 @@ router.post('/findDocument', async (req, res) => {
             searchObj.designation = { [Op.substring]: designation.toLowerCase() };
         }
         if (number) {
-            searchObj.number = { [Op.substring]: number.toLowerCase() };
+            searchObj.number = { [Op.substring]: number.toString() };
         }
         if (folderId) {
             searchObj.FolderId = folderId;

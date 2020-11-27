@@ -9,7 +9,7 @@
             <div class="folder__year">
                 <span>{{ folder.year }}</span>
             </div>
-            <div>{{ folder.name }}</div>
+            <div class="folder__name">{{ folder.name }}</div>
             <div class="folder__number">{{ folder.number }}</div>
         </div>
     </div>
@@ -70,6 +70,13 @@
         .folder-container {
             background-color: white;
             height: 100%;
+        }
+
+        &__name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 50%;
         }
 
         &__year {

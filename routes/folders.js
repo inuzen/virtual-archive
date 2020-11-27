@@ -61,6 +61,7 @@ router.post('/findFolder', async (req, res) => {
         const folders = await Folder.findAll({
             where: searchObj,
         });
+
         const high = folders.reduce(
             (acc, curr) => {
                 acc.folders.push(curr.id);
@@ -76,7 +77,7 @@ router.post('/findFolder', async (req, res) => {
             },
         );
 
-        res.json({ folders: [...new Set(high)], shelves: [...new Set(high.shelves)] });
+        res.json({ folders: [...new Set(high.folders)], shelves: [...new Set(high.shelves)] });
     } catch (error) {
         console.error(error);
         res.status(500).send('Server Error');
