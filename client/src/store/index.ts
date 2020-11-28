@@ -153,14 +153,14 @@ export default new Vuex.Store({
             state.currentDocument = document;
         },
         ADD_DOCUMENT(state, newDoc) {
-            state.documents.push(newDoc);
+            state.currentFolder.Documents.push(newDoc);
+        },
+        DELETE_DOCUMENT(state, docId) {
+            state.currentFolder.Documents = state.currentFolder.Documents.filter((doc) => doc.id !== docId);
         },
         ADD_FOLDER(state, { folder, shelf }) {
             state.shelvesMap[shelf.name].find((s) => s.number === shelf.number).Folders.push(folder);
         },
-        // FIND_FOLDER(state, res) {
-        //     state.high
-        // },
         TOGGLE_FOLDER(state) {
             state.showFolderView = !state.showFolderView;
         },

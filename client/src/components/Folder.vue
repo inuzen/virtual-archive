@@ -63,7 +63,7 @@
             z-index: 10;
         }
 
-        &.A3 {
+        &.a3 {
             height: 86px;
         }
 

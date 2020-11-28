@@ -36,7 +36,9 @@ export const documentActions = {
     async deleteDocument({ commit }, documentId) {
         try {
             const res = await Vue.axios.delete(`documents/${documentId}`);
-            commit('DELETE_DOCUMENT', res.data);
+            if (res.status === 200) {
+                commit('DELETE_DOCUMENT', documentId);
+            }
         } catch (error) {
             throw new Error(`API ${error}`);
         }

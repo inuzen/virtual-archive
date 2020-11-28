@@ -40,9 +40,7 @@
     export default class Shelf extends Vue {
         @Prop(Object) public shelf;
         @State highlightedShelfs;
-        constructor() {
-            super();
-        }
+
         public showNewFolderModal = false;
         public showCreateBtn: boolean = false;
         public activate = false;
@@ -59,6 +57,9 @@
             }
         }
         onAddFolder() {
+            this.onShelfClick();
+            console.log(this.shelf);
+
             this.showNewFolderModal = true;
         }
     }

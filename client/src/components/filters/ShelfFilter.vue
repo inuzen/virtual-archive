@@ -50,6 +50,10 @@
             this.filterValues = this.shelfFilter;
         }
         updated() {
+            if (!this.emptyFilter.name) {
+                this.emptyFilter.name = this.columnNames[0];
+            }
+
             if (this.enabled) {
                 this.setShelfFilter(this.emptyFilter);
             } else {

@@ -24,7 +24,7 @@
     </div>
 </template>
 <script lang="ts">
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
     import Shelf from './Shelf.vue';
     import ViewFolder from './ViewFolder.vue';
     import ViewSubfolder from './ViewSubfolder.vue';
@@ -44,9 +44,29 @@
         @State showFolderView;
         @State showSubfolderView;
         @State error;
+        @State highlightedShelfs;
+        @State highlightedFolders;
         @Action toggleFolderView;
         @Action toggleError;
         @Action toggleSubfolderView;
+
+        @Watch('highlightedShelfs')
+        onShelvesChanged() {
+            if (this.highlightedFolders.length) {
+                setTimeout(() => {
+                    const el = document.querySelector('.folder.highlight');
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 0);
+                return;
+            }
+            if (this.highlightedShelfs.length) {
+                setTimeout(() => {
+                    const el = document.querySelector('.folders-container.highlight');
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 0);
+            }
+        }
+
         private showErrorDialog = false;
         created() {
             this.$store.dispatch('loadShelvesWithFolders');

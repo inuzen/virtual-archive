@@ -9,8 +9,8 @@
                 <TextInput :label="'Номер'" @input="(val) => onInputChange(val, 'number')" />
                 <TextInput :label="'Год'" @input="(val) => onInputChange(val, 'year')" />
                 <div class="button-row">
-                    <md-radio v-model="folderValues.format" class="md-primary" value="A3">A3</md-radio>
-                    <md-radio v-model="folderValues.format" class="md-primary" value="A4">A4</md-radio>
+                    <md-radio v-model="folderValues.format" class="md-primary" value="a3">A3</md-radio>
+                    <md-radio v-model="folderValues.format" class="md-primary" value="a4">A4</md-radio>
                 </div>
                 <div class="button-row">
                     <button @click="onClose" class="btn slim secondary">Отменить</button>
@@ -39,7 +39,7 @@
             name: '',
             number: '',
             year: '',
-            format: 'A4',
+            format: 'a4',
         };
 
         public folderValues = this.initialValues;

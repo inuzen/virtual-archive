@@ -33,26 +33,31 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    flex: 1;
     margin-bottom: 30px;
+
     .edit-button-container {
+        min-width: 30px;
         margin-left: 30px;
         margin-right: 20px;
         cursor: pointer;
+        // width: 10%;
     }
 }
-.folder-title-highlight {
-    width: 100%;
-    background-color: #828282;
-    border: 5px solid transparent;
-    border-radius: 2px;
-    &.active {
-        border-color: $interactive;
-    }
-}
+// .folder-title-highlight {
+//     width: 100%;
+//     background-color: #828282;
+//     border: 5px solid transparent;
+//     border-radius: 2px;
+//     &.active {
+//         border-color: $interactive;
+//     }
+// }
 .folder-title-wrapper {
     margin: 0 10px;
     height: 130px;
-    max-width: 100%;
+    width: 90%;
+
     background-color: $white;
 
     display: flex;
@@ -60,6 +65,12 @@
     align-items: center;
     justify-content: flex-start;
     padding: 14px 0;
+    &.highlight {
+        box-shadow: 0px 0px 10px 8px rgba(27, 195, 206, 1);
+        position: relative;
+        z-index: 10;
+    }
+
     .year {
         font-size: 30px;
         line-height: 100%;
@@ -71,7 +82,7 @@
     }
     .name {
         text-align: start;
-        width: 50%;
+        width: 80%;
         font-size: 60px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -90,11 +101,13 @@
             max-width: 130px;
         }
     }
+
     .input-wrapper {
         input {
             padding: 15px 0;
             min-height: 100px;
             height: 100%;
+            cursor: initial;
         }
     }
 }
@@ -124,7 +137,7 @@
     width: 100%;
     .header {
         display: grid;
-        grid-template-columns: 150px 420px 420px 240px;
+        grid-template-columns: 150px 420px 420px 240px 60px;
         grid-gap: 30px;
         justify-items: start;
         font-size: 20px;

@@ -67,7 +67,7 @@ router.post('/findFolder', async (req, res) => {
                 acc.folders.push(curr.id);
                 acc.shelves.push(curr.ShelfId);
                 if (curr.isSubFolder) {
-                    acc.push(curr.parentFolderId);
+                    acc.folders.push(curr.parentFolderId);
                 }
                 return acc;
             },
@@ -100,7 +100,7 @@ router.post('/', async (req, res) => {
         if (!name || !year || !number || !format || !shelfID) {
             res.send(400).send('One or more of the required fields is missing');
         }
-        if (format !== 'A3' && format !== 'A4') {
+        if (format !== 'a3' && format !== 'a4') {
             res.status(400).send('Invalid format');
         }
 

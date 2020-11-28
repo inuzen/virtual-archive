@@ -1,9 +1,9 @@
 <template>
     <div class="document" :class="{ highlight: highlightedDocuments.includes(document.id) ? true : false }">
         <div class="document__main-info" @click="onShowDescription">
-            <span class="document__name">{{ document.name }}</span>
-            <span class="document__designation">{{ document.designation }}</span>
             <span class="document__name">{{ document.number }}</span>
+            <span class="document__designation">{{ document.designation }}</span>
+            <span class="document__name">{{ document.name }}</span>
             <div class="document__tags">
                 <div v-for="tag in document.tags" :key="tag" class="tag">
                     <span class="tag-text">{{ tag }}</span>
@@ -13,7 +13,7 @@
                 </div>
                 <div class="tag add-tag">+</div>
             </div>
-            <div class="delete-button-container">
+            <div @click="onDocumentDelete" class="delete-button-container">
                 <div class="img-wrapper">
                     <img src="../assets/icons/delete-icon.svg" alt="" />
                 </div>
@@ -33,11 +33,18 @@
     export default class Document extends Vue {
         @Prop(Object) public document;
         @State highlightedDocuments;
+        @Action deleteDocument;
         public tags = ['обработано', 'на проверке', 'very long fucking tag for some reason'];
         public expand = false;
 
         public onShowDescription(e) {
             this.expand = !this.expand;
+        }
+
+        public onDocumentDelete(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.deleteDocument(this.document.id);
         }
     }
 </script>
@@ -55,7 +62,7 @@
         line-height: 120%;
         &__main-info {
             display: grid;
-            grid-template-columns: 150px 420px 420px 240px 30px;
+            grid-template-columns: 150px 420px 420px 240px 60px;
             grid-gap: 30px;
             justify-items: start;
             cursor: pointer;

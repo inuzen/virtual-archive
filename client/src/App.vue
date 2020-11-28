@@ -13,7 +13,7 @@
         (
             primary: #1bc3ce,
             // The primary color of your application
-                accent: #b8e6e9 // The accent or secondary color,
+                accent: #b8e6e9 // The accent or secondary color,,,
         )
     );
 

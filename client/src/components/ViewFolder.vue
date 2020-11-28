@@ -6,21 +6,19 @@
             </div>
         </div>
         <div class="folder-title-container">
-            <div class="folder-title-highlight active">
-                <div class="folder-title-wrapper">
-                    <div class="year">{{ fullFolder.year }}</div>
-                    <div v-if="!folderEditMode" class="name">
-                        {{ fullFolder.name }}
-                    </div>
-                    <div v-if="!folderEditMode" class="number">
-                        {{ fullFolder.number }}
-                    </div>
-                    <div v-if="folderEditMode" class="name">
-                        <TextInput @input="(val) => onInputChange(val, 'folderName')" :value="fullFolder.name" />
-                    </div>
-                    <div v-if="folderEditMode" class="number">
-                        <TextInput @input="(val) => onInputChange(val, 'folderNumber')" :value="fullFolder.number" />
-                    </div>
+            <div class="folder-title-wrapper highlight">
+                <div class="year">{{ fullFolder.year }}</div>
+                <div v-if="!folderEditMode" class="name">
+                    {{ fullFolder.name }}
+                </div>
+                <div v-if="!folderEditMode" class="number">
+                    {{ fullFolder.number }}
+                </div>
+                <div v-if="folderEditMode" class="name">
+                    <TextInput @input="(val) => onInputChange(val, 'folderName')" :value="fullFolder.name" />
+                </div>
+                <div v-if="folderEditMode" class="number">
+                    <TextInput @input="(val) => onInputChange(val, 'folderNumber')" :value="fullFolder.number" />
                 </div>
             </div>
             <div class="edit-button-container" @click="editModeOn" v-if="!folderEditMode">
