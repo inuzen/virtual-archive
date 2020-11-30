@@ -60,10 +60,13 @@ export const folderActions = {
             throw new Error(`API ${error}`);
         }
     },
-    async updateFolder({ commit }, folder) {
+    async updateFolder({ commit }, { newFolder, currShelf, newShelf }) {
         try {
-            const res = await Vue.axios.put(`folders/${folder.id}`, folder);
-            commit('DELETE_FOLDER', res.data);
+            const res = await Vue.axios.put(`folders/${newFolder.id}`, newFolder);
+            if (res.status === 200) {
+                commit('DELETE_FOLDER', { folderId: newFolder.id, shelf: currShelf });
+                commit('ADD_FOLDER', { folder: newFolder, shelf: newShelf });
+            }
         } catch (error) {
             throw new Error(`API ${error}`);
         }

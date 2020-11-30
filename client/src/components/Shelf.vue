@@ -29,7 +29,7 @@
     import FolderModal from '@/components/dialogs/FolderModal.vue';
 
     import Folder from './Folder.vue';
-    import { State } from 'vuex-class';
+    import { State, Action } from 'vuex-class';
 
     @Component({
         components: {
@@ -40,6 +40,7 @@
     export default class Shelf extends Vue {
         @Prop(Object) public shelf;
         @State highlightedShelfs;
+        @Action setCurrentShelf;
 
         public showNewFolderModal = false;
         public showCreateBtn: boolean = false;
@@ -51,15 +52,12 @@
             this.activate = true;
         }
         onShelfClick() {
-            if (this.shelf) {
-                const { id, name, number } = this.shelf;
-                this.$store.dispatch('setCurrentShelf', { id, name, number });
+            if (this.shelf.id) {
+                this.setCurrentShelf({ ...this.shelf });
             }
         }
         onAddFolder() {
             this.onShelfClick();
-            console.log(this.shelf);
-
             this.showNewFolderModal = true;
         }
     }

@@ -15,10 +15,10 @@
                     {{ fullFolder.number }}
                 </div>
                 <div v-if="folderEditMode" class="name">
-                    <TextInput @input="(val) => onInputChange(val, 'folderName')" :value="fullFolder.name" />
+                    <TextInput @input="(val) => onInputChange(val, 'name')" :value="fullFolder.name" />
                 </div>
                 <div v-if="folderEditMode" class="number">
-                    <TextInput @input="(val) => onInputChange(val, 'folderNumber')" :value="fullFolder.number" />
+                    <TextInput @input="(val) => onInputChange(val, 'number')" :value="fullFolder.number" />
                 </div>
             </div>
             <div class="edit-button-container" @click="editModeOn" v-if="!folderEditMode">
@@ -30,7 +30,12 @@
         <div v-if="folderEditMode" class="folder-edit-container">
             <p class="label">Переместить в</p>
             <div class="folder-actions-row">
-                <ShelfFilter :showCheckbox="false" @filterChange="onShelfFilterChange" />
+                <ShelfFilter
+                    :enabled="true"
+                    :showCheckbox="false"
+                    @filterChange="onShelfFilterChange"
+                    :initialValue="currentShelf"
+                />
                 <div v-if="markForDelete" class="message-container">
                     Удаление папки вступит в силу после сохранения изменений, все данные в этой папке будут потеряны
                 </div>
@@ -95,20 +100,29 @@
     export default class ViewFolder extends Vue {
         @State currentFolderId;
         @State currentFolder;
+        @State currentShelf;
+        @State shelvesMap;
+        @State shelves;
         @Action getDocumentsByFolder;
         @Action getFolderFull;
         @Action toggleFolderView;
+        @Action updateFolder;
         public folderEditMode = false;
         public showDocumentModal = false;
         public showAddFolderModal = false;
         public markForDelete = false;
         public fullFolder = {};
-
+        public shelfFilter = {
+            name: '',
+            number: 1,
+        };
         async created() {
             if (this.currentFolderId) {
                 await this.getFolderFull(this.currentFolderId);
                 this.fullFolder = this.currentFolder;
             }
+            this.shelfFilter.name = this.currentShelf.name;
+            this.shelfFilter.number = this.currentShelf.number;
         }
 
         public onInputChange(value, inputName) {
@@ -132,12 +146,29 @@
         public editModeOn() {
             this.folderEditMode = true;
         }
-        public toggle() {
+        public editModeOff() {
+            this.folderEditMode = false;
+        }
+        public toggleEditMode() {
             this.folderEditMode = !this.folderEditMode;
         }
 
         public onClickSave() {
-            // this.$emit('change-folder');
+            const currShelf = this.currentShelf;
+
+            const newShelf = this.shelves.find(
+                (shelf) => shelf.name === this.shelfFilter.name && shelf.number == this.shelfFilter.number,
+            );
+
+            this.updateFolder({
+                newFolder: {
+                    ...this.fullFolder,
+                    ShelfId: newShelf.id,
+                },
+                currShelf,
+                newShelf,
+            });
+            this.editModeOff();
         }
         public onClose() {
             this.folderEditMode = false;
@@ -148,7 +179,7 @@
         }
 
         public onShelfFilterChange(filterValues) {
-            //this.shelfFilter = filterValues
+            this.shelfFilter = filterValues;
         }
 
         public closeFolderModal() {

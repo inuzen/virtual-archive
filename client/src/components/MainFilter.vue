@@ -1,7 +1,13 @@
 <template>
     <div class="main-filter">
         <div class="single-row">
-            <ShelfFilter :enabled="shelfFilterEnabled" :showCheckbox="true" @toggleChkbx="onShelfToggle" />
+            <ShelfFilter
+                :enabled="shelfFilterEnabled"
+                :showCheckbox="true"
+                :initialValue="localShelfFilter"
+                @toggleChkbx="onShelfToggle"
+                @filterChange="onShelfFilterChange"
+            />
             <FolderFilter :enabled="folderFilterEnabled" @toggleChkbx="onFolderToggle" />
         </div>
         <div class="doc-filter-row">
@@ -13,7 +19,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
     import ShelfFilter from '@/components/filters/ShelfFilter.vue';
     import FolderFilter from '@/components/filters/FolderFilter.vue';
     import DocumentFilter from '@/components/filters/DocumentFilter.vue';
@@ -31,15 +37,27 @@
         @Action findDocument;
         @Action clearFilters;
         @Action setFolderFilter;
+        @Action setShelfFilter;
+
         @State shelvesMap;
         @State filterValues;
-        @State shelfFilter;
+        // @State shelfFilter;
         @State documentFilter;
         @State folderFilter;
+        @State columnNames;
+
+        @Watch('columnNames')
+        onColumnNameChange() {
+            this.localShelfFilter.name = this.columnNames[0];
+        }
 
         public shelfFilterEnabled: boolean = false;
         public folderFilterEnabled: boolean = false;
         public documentFilterEnabled: boolean = false;
+        public localShelfFilter = {
+            name: '',
+            number: 1,
+        };
 
         public onFolderToggle() {
             this.folderFilterEnabled = !this.folderFilterEnabled;
@@ -52,13 +70,10 @@
         }
 
         public async onClick() {
-            console.log(this.documentFilterEnabled);
-            console.log(this.folderFilterEnabled);
-
             if (this.shelfFilterEnabled) {
-                const shelfIDs = this.shelvesMap[this.shelfFilter.name]
+                const shelfIDs = this.shelvesMap[this.localShelfFilter.name]
                     .map((shelf: any) => {
-                        if (shelf.number == this.shelfFilter.number) {
+                        if (shelf.number == this.localShelfFilter.number) {
                             return shelf.id;
                         }
                     })
@@ -74,6 +89,10 @@
         }
         public onClearFilters() {
             this.clearFilters();
+        }
+
+        public onShelfFilterChange(filterValue) {
+            this.localShelfFilter = filterValue;
         }
     }
 </script>

@@ -154,11 +154,9 @@ router.delete('/:id', async (req, res) => {
 // @desc Update contact
 // @access Private
 router.put('/:id', async (req, res) => {
-    const { name, year, number, format, isSubFolder, shelfID, parentFolderId } = req.body;
+    const { name, year, number, format, isSubFolder, ShelfId, parentFolderId } = req.body;
 
     try {
-        console.log(req.body);
-
         if (isSubFolder) {
             if (!parentFolderId) {
                 res.status(400).send('Folder is marked as Subfolder but doesnt contain parent ID');
@@ -168,7 +166,7 @@ router.put('/:id', async (req, res) => {
         if (!name || !year || !number || !format) {
             res.send(400).send('One or more of the required fields is missing');
         }
-        if (format !== 'A3' && format !== 'A4') {
+        if (format !== 'a3' && format !== 'a4') {
             res.status(400).send('Invalid format');
         }
 
@@ -180,7 +178,7 @@ router.put('/:id', async (req, res) => {
                 format,
                 isSubFolder,
                 parentFolderId: isSubFolder ? parentFolderId : null,
-                ShelfId: shelfID,
+                ShelfId: ShelfId,
             },
             {
                 where: {
@@ -189,7 +187,6 @@ router.put('/:id', async (req, res) => {
             },
         );
 
-        // await user.save();
         res.json({ folder }); // Returns the updated folder that is created in the database
     } catch (err) {
         console.error(err.message);

@@ -35,7 +35,7 @@ export default new Vuex.Store({
     actions: {
         async loadShelves({ commit }) {
             try {
-                const res = await Vue.axios.get('shelves/withFolders');
+                const res = await Vue.axios.get('shelves');
                 commit('SET_SHELVES', res.data);
             } catch (error) {
                 throw new Error(`API ${error}`);
@@ -159,7 +159,16 @@ export default new Vuex.Store({
             state.currentFolder.Documents = state.currentFolder.Documents.filter((doc) => doc.id !== docId);
         },
         ADD_FOLDER(state, { folder, shelf }) {
-            state.shelvesMap[shelf.name].find((s) => s.number === shelf.number).Folders.push(folder);
+            state.shelvesMap[shelf.name].find((s) => s.id == shelf.id).Folders.push(folder);
+        },
+        // UPDATE_FOLDER(state, { folder, currShelfId, newShelfId }) {
+        //     if (currShelfId !== newShelfId.id) {
+        //     }
+        // },
+        DELETE_FOLDER(state, { folderId, shelf }) {
+            state.shelvesMap[shelf.name].find((s) => s.id == shelf.id).Folders = state.shelvesMap[shelf.name]
+                .find((s) => s.id == shelf.id)
+                .Folders.filter((fld) => fld.id !== folderId);
         },
         TOGGLE_FOLDER(state) {
             state.showFolderView = !state.showFolderView;

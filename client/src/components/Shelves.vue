@@ -49,6 +49,8 @@
         @Action toggleFolderView;
         @Action toggleError;
         @Action toggleSubfolderView;
+        @Action loadShelvesWithFolders;
+        @Action loadShelves;
 
         @Watch('highlightedShelfs')
         onShelvesChanged() {
@@ -69,7 +71,8 @@
 
         private showErrorDialog = false;
         created() {
-            this.$store.dispatch('loadShelvesWithFolders');
+            this.loadShelves();
+            this.loadShelvesWithFolders();
         }
 
         getRInt(min, max) {

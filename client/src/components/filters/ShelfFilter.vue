@@ -6,14 +6,34 @@
         <div class="filter-row combined-filter">
             <div class="input-wrapper">
                 <label for="" class="input-label" :class="{ disabled: !enabled }">Название шкафа</label>
-                <select @change="onNameChange" class="input-select no-right-border" :disabled="!enabled" name="" id="">
-                    <option v-for="item in columnNames" :key="item" :value="item">{{ item }}</option>
+                <select
+                    @change="(val) => onInputChange(val, 'name')"
+                    class="input-select no-right-border"
+                    :disabled="!enabled"
+                >
+                    <option
+                        v-for="item in columnNames"
+                        :key="item"
+                        :value="item"
+                        :selected="item === filterValues.name"
+                        >{{ item }}</option
+                    >
                 </select>
             </div>
             <div class="input-wrapper">
                 <label for="" class="input-label" :class="{ disabled: !enabled }">№</label>
-                <select @change="onNumChange" class="input-select no-left-border-r" :disabled="!enabled" name="" id="">
-                    <option v-for="item in shelfNumber" :key="item" :value="item">{{ item }}</option>
+                <select
+                    @change="(val) => onInputChange(val, 'number')"
+                    class="input-select no-left-border-r"
+                    :disabled="!enabled"
+                >
+                    <option
+                        v-for="item in shelfNumber"
+                        :key="item"
+                        :value="item"
+                        :selected="item === filterValues.number"
+                        >{{ item }}</option
+                    >
                 </select>
             </div>
         </div>
@@ -21,7 +41,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Vue, Model } from 'vue-property-decorator';
+    import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
     import { State, Action } from 'vuex-class';
     import TextInput from '@/components/TextInput.vue';
 
@@ -31,9 +51,11 @@
         },
     })
     export default class ShelfFilter extends Vue {
-        // @Model('change', { type: Boolean }) public checked!: boolean
         @Prop(Boolean) public showCheckbox;
         @Prop(Boolean) public enabled;
+        @Prop() public initialValue;
+        @Prop(Boolean) public moveMode;
+
         @State columnNames;
         @Action setShelfFilter;
         @State shelfFilter;
@@ -46,18 +68,10 @@
         };
 
         created() {
-            this.setShelfFilter(this.emptyFilter);
-            this.filterValues = this.shelfFilter;
-        }
-        updated() {
-            if (!this.emptyFilter.name) {
-                this.emptyFilter.name = this.columnNames[0];
-            }
-
-            if (this.enabled) {
-                this.setShelfFilter(this.emptyFilter);
+            if (this.initialValue) {
+                this.filterValues = { ...this.initialValue };
             } else {
-                this.setShelfFilter(null);
+                this.filterValues = this.emptyFilter;
             }
         }
 
@@ -65,19 +79,10 @@
             this.$emit('toggleChkbx');
         }
 
-        public onNameChange(event) {
-            this.filterValues.name = event.target.value;
-            this.setShelfFilter(this.filterValues);
+        public onInputChange(event, inputName) {
+            this.filterValues[inputName] = event.target.value;
+            this.$emit('filterChange', this.filterValues);
         }
-        public onNumChange(event) {
-            this.filterValues.number = event.target.value;
-            this.setShelfFilter(this.filterValues);
-        }
-
-        // public onInputChange (value, inputName) {
-        //     this.filterValues[inputName] = value
-        //     this.$emit('filterChange', this.filterValues);
-        // }
     }
 </script>
 
