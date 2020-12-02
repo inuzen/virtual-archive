@@ -101,12 +101,12 @@
         @State currentFolderId;
         @State currentFolder;
         @State currentShelf;
-        @State shelvesMap;
         @State shelves;
         @Action getDocumentsByFolder;
         @Action getFolderFull;
         @Action toggleFolderView;
         @Action updateFolder;
+        @Action deleteFolder;
         public folderEditMode = false;
         public showDocumentModal = false;
         public showAddFolderModal = false;
@@ -154,20 +154,24 @@
         }
 
         public onClickSave() {
-            const currShelf = this.currentShelf;
+            if (this.markForDelete) {
+                this.deleteFolder(this.currentFolderId);
+            } else {
+                const currShelf = this.currentShelf;
 
-            const newShelf = this.shelves.find(
-                (shelf) => shelf.name === this.shelfFilter.name && shelf.number == this.shelfFilter.number,
-            );
+                const newShelf = this.shelves.find(
+                    (shelf) => shelf.name === this.shelfFilter.name && shelf.number == this.shelfFilter.number,
+                );
 
-            this.updateFolder({
-                newFolder: {
-                    ...this.fullFolder,
-                    ShelfId: newShelf.id,
-                },
-                currShelf,
-                newShelf,
-            });
+                this.updateFolder({
+                    newFolder: {
+                        ...this.fullFolder,
+                        ShelfId: newShelf.id,
+                    },
+                    currShelf,
+                    newShelf,
+                });
+            }
             this.editModeOff();
         }
         public onClose() {
@@ -184,7 +188,6 @@
 
         public closeFolderModal() {
             this.toggleFolderView();
-            // this.$emit('closeFolderModal');
         }
     }
 </script>

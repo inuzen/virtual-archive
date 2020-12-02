@@ -71,4 +71,14 @@ export const folderActions = {
             throw new Error(`API ${error}`);
         }
     },
+    async updateSubfolder({ commit }, { newFolder }) {
+        try {
+            const res = await Vue.axios.put(`folders/${newFolder.id}`, newFolder);
+            if (res.status === 200) {
+                commit('UPDATE_SUBFOLDER', { newFolder });
+            }
+        } catch (error) {
+            throw new Error(`API ${error}`);
+        }
+    },
 };

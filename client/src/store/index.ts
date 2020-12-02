@@ -170,6 +170,9 @@ export default new Vuex.Store({
                 .find((s) => s.id == shelf.id)
                 .Folders.filter((fld) => fld.id !== folderId);
         },
+        UPDATE_SUBFOLDER(state, newFolder) {
+            // state.currentFolder.
+        },
         TOGGLE_FOLDER(state) {
             state.showFolderView = !state.showFolderView;
         },

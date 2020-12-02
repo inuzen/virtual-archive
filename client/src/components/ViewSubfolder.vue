@@ -6,21 +6,19 @@
             </div>
         </div>
         <div class="folder-title-container">
-            <div class="folder-title-highlight active">
-                <div class="folder-title-wrapper">
-                    <div class="year">{{ fullFolder.year }}</div>
-                    <div v-if="!folderEditMode" class="name">
-                        {{ fullFolder.name }}
-                    </div>
-                    <div v-if="!folderEditMode" class="number">
-                        {{ fullFolder.number }}
-                    </div>
-                    <div v-if="folderEditMode" class="name">
-                        <TextInput @input="(val) => onInputChange(val, 'folderName')" :value="fullFolder.name" />
-                    </div>
-                    <div v-if="folderEditMode" class="number">
-                        <TextInput @input="(val) => onInputChange(val, 'folderNumber')" :value="fullFolder.number" />
-                    </div>
+            <div class="folder-title-wrapper highlight">
+                <div class="year">{{ fullFolder.year }}</div>
+                <div v-if="!folderEditMode" class="name">
+                    {{ fullFolder.name }}
+                </div>
+                <div v-if="!folderEditMode" class="number">
+                    {{ fullFolder.number }}
+                </div>
+                <div v-if="folderEditMode" class="name">
+                    <TextInput @input="(val) => onInputChange(val, 'name')" :value="fullFolder.name" />
+                </div>
+                <div v-if="folderEditMode" class="number">
+                    <TextInput @input="(val) => onInputChange(val, 'number')" :value="fullFolder.number" />
                 </div>
             </div>
             <div class="edit-button-container" @click="editModeOn" v-if="!folderEditMode">
@@ -30,9 +28,7 @@
             </div>
         </div>
         <div v-if="folderEditMode" class="folder-edit-container">
-            <p class="label">Переместить в</p>
             <div class="folder-actions-row">
-                <ShelfFilter :showCheckbox="false" @filterChange="onShelfFilterChange" />
                 <div v-if="markForDelete" class="message-container">
                     Удаление папки вступит в силу после сохранения изменений, все данные в этой папке будут потеряны
                 </div>
@@ -44,12 +40,6 @@
                     Удалить
                 </button>
             </div>
-        </div>
-        <div class="subfolder-row">
-            <Folder v-for="folder in fullFolder.Folders" :key="folder.id" :folder="folder" />
-            <button @click="showAddFolderModal = true" class="btn primary add-subfolder-btn">
-                +
-            </button>
         </div>
         <button @click="onShowDocumentModal" class="btn primary">
             Добавить документ
@@ -100,9 +90,11 @@
         @Action getDocumentsByFolder;
         @Action getSubfolder;
         @Action toggleSubfolderView;
+        @Action updateSubFolder;
+        @Action deleteFolder;
+
         public folderEditMode = false;
         public showDocumentModal = false;
-        public showAddFolderModal = false;
         public markForDelete = false;
         public fullFolder = {};
 
@@ -123,23 +115,28 @@
             this.showDocumentModal = true;
         }
 
-        public onShowAddFolderModal() {
-            this.showAddFolderModal = true;
-        }
-
-        public closeAddFolderModal() {
-            this.showAddFolderModal = false;
-        }
-
         public editModeOn() {
             this.folderEditMode = true;
         }
+        public editModeOff() {
+            this.folderEditMode = false;
+        }
+
         public toggle() {
             this.folderEditMode = !this.folderEditMode;
         }
 
         public onClickSave() {
-            // this.$emit('change-folder');
+            if (this.markForDelete) {
+                this.deleteFolder(this.currentSubfolderId);
+            } else {
+                this.updateSubFolder({
+                    newFolder: {
+                        ...this.fullFolder,
+                    },
+                });
+            }
+            this.editModeOff();
         }
         public onClose() {
             this.folderEditMode = false;
@@ -149,13 +146,8 @@
             this.markForDelete = true;
         }
 
-        public onShelfFilterChange(filterValues) {
-            //this.shelfFilter = filterValues
-        }
-
         public closeFolderModal() {
             this.toggleSubfolderView();
-            // this.$emit('closeFolderModal');
         }
     }
 </script>
