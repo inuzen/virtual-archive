@@ -64,6 +64,9 @@
                 <span>Документ</span>
                 <span>Стикер</span>
             </div>
+            <div class="document-list search-result">
+                <Document v-for="doc in foundDocuments" :key="doc.id" :document="doc" />
+            </div>
             <div class="document-list">
                 <Document v-for="doc in fullFolder.Documents" :key="doc.id" :document="doc" />
             </div>
@@ -78,7 +81,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
     import Document from '@/components/Document.vue';
     import Folder from '@/components/Folder.vue';
     import TextInput from '@/components/TextInput.vue';
@@ -102,16 +105,19 @@
         @State currentFolder;
         @State currentShelf;
         @State shelves;
+        @State highlightedDocuments;
         @Action getDocumentsByFolder;
         @Action getFolderFull;
         @Action toggleFolderView;
         @Action updateFolder;
         @Action deleteFolder;
+
         public folderEditMode = false;
         public showDocumentModal = false;
         public showAddFolderModal = false;
         public markForDelete = false;
-        public fullFolder = {};
+        public foundDocuments = [];
+        public fullFolder: any = {};
         public shelfFilter = {
             name: '',
             number: 1,
@@ -120,6 +126,9 @@
             if (this.currentFolderId) {
                 await this.getFolderFull(this.currentFolderId);
                 this.fullFolder = this.currentFolder;
+                this.foundDocuments = this.fullFolder.Documents.filter((doc) =>
+                    this.highlightedDocuments.includes(doc.id),
+                );
             }
             this.shelfFilter.name = this.currentShelf.name;
             this.shelfFilter.number = this.currentShelf.number;

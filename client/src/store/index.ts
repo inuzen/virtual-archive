@@ -128,7 +128,7 @@ export default new Vuex.Store({
                 }
             });
             state.shelvesMap = shelvesObj;
-            state.columnNames = names;
+            state.columnNames = names.sort();
         },
 
         SET_DOCUMENTS(state, docs) {

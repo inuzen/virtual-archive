@@ -149,6 +149,9 @@
     }
     .document-list {
         // overflow-y: scroll;
+        &.search-result {
+            font-weight: bold;
+        }
     }
 }
 .folder-edit-container {

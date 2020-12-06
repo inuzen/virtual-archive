@@ -33,7 +33,7 @@ router.get('/withFolders', async (req, res) => {
                 },
             },
         });
-
+        console.log(shelves);
         res.json(shelves);
     } catch (error) {
         console.error(error);

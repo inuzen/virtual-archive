@@ -4,8 +4,17 @@
             <span v-for="name in columnNames" :key="name">{{ name }}</span>
         </div>
         <div class="shelves">
-            <div class="shelf-column" v-for="(shelfArr, name) in shelvesMap" :key="name">
+            <!-- <div class="shelf-column" v-for="(shelfArr, name, index) in shelvesMap" :key="name + index">
                 <Shelf v-for="shelf in shelfArr" :key="shelf.id" :shelf="shelf" />
+            </div> -->
+            <div class="shelf-column">
+                <Shelf v-for="shelf in shelvesMap[columnNames[0]]" :key="shelf.id" :shelf="shelf" />
+            </div>
+            <div class="shelf-column">
+                <Shelf v-for="shelf in shelvesMap[columnNames[1]]" :key="shelf.id" :shelf="shelf" />
+            </div>
+            <div class="shelf-column">
+                <Shelf v-for="shelf in shelvesMap[columnNames[2]]" :key="shelf.id" :shelf="shelf" />
             </div>
         </div>
         <md-dialog :md-active.sync="showFolderView">

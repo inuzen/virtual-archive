@@ -1,5 +1,6 @@
 <template>
     <div class="shelf">
+        <p>{{ shelf.name }}</p>
         <div
             class="folders-container"
             :class="{ highlight: highlightedShelfs.includes(shelf.id) }"

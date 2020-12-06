@@ -1,5 +1,6 @@
 <template>
-    <div class="document" :class="{ highlight: highlightedDocuments.includes(document.id) ? true : false }">
+    <div class="document">
+        <!-- <div class="document" :class="{ highlight: highlightedDocuments.includes(document.id) ? true : false }"> -->
         <div class="document__main-info" @click="onShowDescription">
             <span class="document__name">{{ document.number }}</span>
             <span class="document__designation">{{ document.designation }}</span>
@@ -32,7 +33,7 @@
     @Component
     export default class Document extends Vue {
         @Prop(Object) public document;
-        @State highlightedDocuments;
+        // @State highlightedDocuments;
         @Action deleteDocument;
         public tags = ['обработано', 'на проверке', 'very long fucking tag for some reason'];
         public expand = false;
@@ -56,7 +57,7 @@
         padding: 20px 0;
         border-bottom: 1px solid $disabled-border;
         &.highlight {
-            font-weight: bold;
+            // font-weight: bold;
         }
         font-size: 20px;
         line-height: 120%;
