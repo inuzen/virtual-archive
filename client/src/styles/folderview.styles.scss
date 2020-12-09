@@ -152,6 +152,13 @@
         &.search-result {
             font-weight: bold;
         }
+        &__label {
+            display: block;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 10px 0;
+            color: $interactive;
+        }
     }
 }
 .folder-edit-container {

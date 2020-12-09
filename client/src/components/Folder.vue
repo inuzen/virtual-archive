@@ -56,6 +56,7 @@
         border-radius: 2px;
         margin: 2px;
         font-size: 13px;
+        cursor: pointer;
         &.highlight {
             // border: 2px solid $interactive;
             box-shadow: 0px 0px 10px 8px rgba(27, 195, 206, 1);
@@ -63,7 +64,7 @@
             z-index: 10;
         }
 
-        &.a3 {
+        &.a4 {
             height: 86px;
         }
 
@@ -82,6 +83,7 @@
         &__year {
             font-size: 10px;
             color: #9a9a9a;
+            overflow: hidden;
             span {
                 display: block;
                 transform: rotate(-90deg);
@@ -90,6 +92,7 @@
 
         &__number {
             font-size: 20px;
+            margin-right: 5px;
         }
     }
 </style>

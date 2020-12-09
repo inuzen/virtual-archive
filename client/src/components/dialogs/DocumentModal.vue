@@ -3,7 +3,7 @@
         <header class="modal-title">новый документ</header>
         <div class="modal-content">
             <p class="modal-info shelf">{{ currentShelf.name }}</p>
-            <p class="modal-info">Папка №66666</p>
+            <p class="modal-info">{{ folderName }}</p>
             <div class="form-container">
                 <TextInput :label="'Инв №'" @input="(val) => onInputChange(val, 'number')" />
                 <TextInput :label="'Обозначение'" @input="(val) => onInputChange(val, 'name')" />
@@ -22,15 +22,18 @@
     import { Component, Prop, Vue } from 'vue-property-decorator';
     import { mapState } from 'vuex';
     import TextInput from '@/components/TextInput.vue';
+    import { State, Action } from 'vuex-class';
 
     @Component({
         components: {
             TextInput,
         },
-        computed: { ...mapState(['currentShelf']) },
     })
     export default class DocumentModal extends Vue {
         @Prop() public folderId;
+        @Prop() public folderName;
+        @State currentShelf;
+        @Action addDocument;
         private initialValues = {
             name: '',
             number: '',
@@ -45,14 +48,11 @@
             this.documentValues[inputName] = value;
         }
         public onClickSave() {
-            // console.log({...this.documentValues, tags: this.documentValues.tags.split(','), FolderId: this.folderId});
-
-            this.$store.dispatch('addDocument', {
+            this.addDocument({
                 ...this.documentValues,
                 tags: this.documentValues.tags ? this.documentValues.tags.split(',') : [],
                 folderId: this.folderId,
             });
-            // this.$emit('change-document', this.documentValues)
             this.$emit('closeDocModal');
         }
         public onClose() {

@@ -59,7 +59,7 @@
             <FolderModal :isSubfolder="true" :parentFolderId="fullFolder.id" @closeFolderModal="closeAddFolderModal" />
         </md-dialog>
         <md-dialog :md-active.sync="showDocumentModal">
-            <DocumentModal :folderId="fullFolder.id" @closeDocModal="closeDocModal" />
+            <DocumentModal :folderId="fullFolder.id" :folderName="fullFolder.name" @closeDocModal="closeDocModal" />
         </md-dialog>
     </div>
 </template>

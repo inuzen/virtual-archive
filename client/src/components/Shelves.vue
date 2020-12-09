@@ -38,7 +38,6 @@
     import ViewFolder from './ViewFolder.vue';
     import ViewSubfolder from './ViewSubfolder.vue';
     import { State, Action } from 'vuex-class';
-
     import { mapState } from 'vuex';
     @Component({
         components: {

@@ -18,8 +18,8 @@
     input,
     select,
     textarea {
-        padding: 12px 30px;
-        min-height: 50px;
+        padding: 8px 30px;
+        min-height: 40px;
         font-size: 20px;
         line-height: 150%;
         border-radius: 5px;
@@ -29,7 +29,7 @@
     }
     .input-label {
         margin-left: 30px;
-        font-size: 20px;
+        font-size: 18px;
         line-height: 150%;
         color: $text-interactive;
         transition: all 0.3s;

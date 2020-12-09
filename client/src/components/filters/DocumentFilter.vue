@@ -42,8 +42,6 @@
             this.filterValues = this.documentFilter;
         }
         updated() {
-            console.log(this.documentFilter);
-
             if (this.enabled) {
                 this.setDocumentFilter(this.emptyFilter);
             } else {

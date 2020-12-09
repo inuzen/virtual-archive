@@ -3,7 +3,7 @@
         <header class="modal-title">Новая {{ isSubfolder ? 'подпапка' : 'папка' }}</header>
         <div class="modal-content">
             <p class="modal-info shelf">{{ currentShelf.name }}</p>
-            <!-- <p class="modal-info">Папка №66666</p> -->
+            <p v-if="isSubfolder" class="modal-info">{{ currentFolder.name }}</p>
             <div class="form-container">
                 <TextInput :label="'Название'" @input="(val) => onInputChange(val, 'name')" />
                 <TextInput :label="'Номер'" @input="(val) => onInputChange(val, 'number')" />
@@ -32,6 +32,7 @@
     })
     export default class FolderModal extends Vue {
         @State currentShelf;
+        @State currentFolder;
         @Action addFolder;
         @Prop(Boolean) isSubfolder;
         @Prop() parentFolderId;

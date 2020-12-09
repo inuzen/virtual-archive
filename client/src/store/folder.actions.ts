@@ -52,10 +52,10 @@ export const folderActions = {
             throw new Error(`API ${error}`);
         }
     },
-    async deleteFolder({ commit }, folderId) {
+    async deleteFolder({ commit }, { currShelf, folderId }) {
         try {
             const res = await Vue.axios.delete(`folders/${folderId}`);
-            commit('DELETE_FOLDER', res.data);
+            commit('DELETE_FOLDER', { folderId, shelf: currShelf });
         } catch (error) {
             throw new Error(`API ${error}`);
         }

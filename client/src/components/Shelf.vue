@@ -95,6 +95,7 @@
         top: -24px;
         left: -25px;
         z-index: 100;
+        cursor: pointer;
 
         .create-icon {
             width: 45px;

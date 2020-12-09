@@ -64,10 +64,12 @@
                 <span>Документ</span>
                 <span>Стикер</span>
             </div>
-            <div class="document-list search-result">
+            <div v-if="foundDocuments.length" class="document-list search-result">
+                <span class="document-list__label">Search Results:</span>
                 <Document v-for="doc in foundDocuments" :key="doc.id" :document="doc" />
             </div>
             <div class="document-list">
+                <span class="document-list__label" v-if="foundDocuments.length">All Docs:</span>
                 <Document v-for="doc in fullFolder.Documents" :key="doc.id" :document="doc" />
             </div>
         </div>
@@ -75,7 +77,7 @@
             <FolderModal :isSubfolder="true" :parentFolderId="fullFolder.id" @closeFolderModal="closeAddFolderModal" />
         </md-dialog>
         <md-dialog :md-active.sync="showDocumentModal">
-            <DocumentModal :folderId="fullFolder.id" @closeDocModal="closeDocModal" />
+            <DocumentModal :folderId="fullFolder.id" :folderName="fullFolder.name" @closeDocModal="closeDocModal" />
         </md-dialog>
     </div>
 </template>
@@ -164,7 +166,8 @@
 
         public onClickSave() {
             if (this.markForDelete) {
-                this.deleteFolder(this.currentFolderId);
+                this.deleteFolder({ folderId: this.currentFolderId, currShelf: this.currentShelf });
+                this.closeFolderModal();
             } else {
                 const currShelf = this.currentShelf;
 
