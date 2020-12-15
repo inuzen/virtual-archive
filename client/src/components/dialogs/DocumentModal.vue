@@ -6,8 +6,8 @@
             <p class="modal-info">{{ folderName }}</p>
             <div class="form-container">
                 <TextInput :label="'Инв №'" @input="(val) => onInputChange(val, 'number')" />
-                <TextInput :label="'Обозначение'" @input="(val) => onInputChange(val, 'name')" />
-                <TextInput :label="'Название'" @input="(val) => onInputChange(val, 'designation')" />
+                <TextInput :label="'Обозначение'" @input="(val) => onInputChange(val, 'designation')" />
+                <TextInput :label="'Название'" @input="(val) => onInputChange(val, 'name')" />
                 <TextInput :label="'Описание'" @input="(val) => onInputChange(val, 'description')" />
                 <TextInput :label="'Теги'" @input="(val) => onInputChange(val, 'tags')" />
                 <div class="button-row">

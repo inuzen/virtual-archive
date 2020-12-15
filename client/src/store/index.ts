@@ -128,7 +128,8 @@ export default new Vuex.Store({
                 }
             });
             state.shelvesMap = shelvesObj;
-            state.columnNames = names.sort();
+            // state.columnNames = names.sort();
+            state.columnNames = ['НТЦ ПРОТЕЙ', 'ПРОТЕЙ СТ (АРХ)', 'ПРОТЕЙ (СЕРТ)'];
         },
 
         SET_DOCUMENTS(state, docs) {
