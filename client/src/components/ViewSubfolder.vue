@@ -87,6 +87,7 @@
     export default class ViewSubfolder extends Vue {
         @State currentSubfolderId;
         @State currentSubfolder;
+        @State currentShelf;
         @Action getDocumentsByFolder;
         @Action getSubfolder;
         @Action toggleSubfolderView;
@@ -128,7 +129,7 @@
 
         public onClickSave() {
             if (this.markForDelete) {
-                this.deleteFolder(this.currentSubfolderId);
+                this.deleteFolder({ folderId: this.currentSubfolderId, currShelf: this.currentShelf });
             } else {
                 this.updateSubFolder({
                     newFolder: {
