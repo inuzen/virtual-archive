@@ -6,6 +6,7 @@
             <p v-if="isSubfolder" class="modal-info">{{ currentFolder.name }}</p>
             <div class="form-container">
                 <TextInput :label="'Название'" @input="(val) => onInputChange(val, 'name')" />
+                <TextInput :label="'Обозначение'" @input="(val) => onInputChange(val, 'designation')" />
                 <TextInput :label="'Номер'" @input="(val) => onInputChange(val, 'number')" />
                 <TextInput :label="'Год'" @input="(val) => onInputChange(val, 'year')" />
                 <div class="button-row">
@@ -38,6 +39,7 @@
         @Prop() parentFolderId;
         private initialValues = {
             name: '',
+            designation: '',
             number: '',
             year: '',
             format: 'a4',

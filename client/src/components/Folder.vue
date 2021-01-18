@@ -10,6 +10,7 @@
                 <span>{{ folder.year }}</span>
             </div>
             <div class="folder__name">{{ folder.name }}</div>
+            <div class="folder__designation">{{ folder.designation }}</div>
             <div class="folder__number">{{ folder.number }}</div>
         </div>
     </div>
@@ -49,50 +50,75 @@
     @import '../styles/colors.scss';
 
     .folder {
-        height: 30px;
+        height: 20px;
         width: 220px;
-        background-color: #9a9a9a;
-        padding: 2px 10px;
+        background-color: #0b26cb;
+        padding: 2px 6px;
         border-radius: 2px;
-        margin: 2px;
-        font-size: 13px;
+        margin: 1px;
+        font-size: 10px;
         cursor: pointer;
         &.highlight {
             // border: 2px solid $interactive;
-            box-shadow: 0px 0px 10px 8px rgba(27, 195, 206, 1);
+            box-shadow: 0px 0px 9px 5px rgba(27, 195, 206, 1);
             position: relative;
             z-index: 10;
         }
-
-        &.a4 {
-            height: 86px;
-        }
-
+       
         .folder-container {
             background-color: white;
             height: 100%;
         }
 
         &__name {
+            
+            font-size: 7px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            line-height: 1.2;
+            text-transform: uppercase;
+            white-space: normal;
+            max-width: 80%;
+            //transform: translateX(-15px);
+        }
+
+        &__designation {
+
+            font-size: 7px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            max-width: 50%;
+            max-width: 40%;
+           // transform: translate(70px,7px);
+      
         }
 
         &__year {
-            font-size: 10px;
+            font-size: 7px;
             color: #9a9a9a;
             overflow: hidden;
+            //transform: translateY(5px);
+            
             span {
                 display: block;
+                width: 20px;
                 transform: rotate(-90deg);
-            }
+                  }
         }
 
         &__number {
-            font-size: 20px;
-            margin-right: 5px;
+            float: right;
+            font-size: 8px;
+            font-weight: 400;
+            margin-right: 10px;                      
         }
+
+    &.a3 {
+        height: 20px;
+        background-color: #000000;
     }
+
+    }
+        
 </style>

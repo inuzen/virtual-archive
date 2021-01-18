@@ -42,11 +42,14 @@ router.get('/folderFull/:id', async (req, res) => {
 //returns and array of matching folder IDs
 router.post('/findFolder', async (req, res) => {
     try {
-        const { name, year, number, format } = req.body;
+        const { name, designation, year, number, format } = req.body;
 
         let searchObj = {};
         if (name) {
             searchObj.name = { [Op.substring]: name.toLowerCase() };
+        }
+        if (designation) {
+            searchObj.designation = designation; // { [Op.substring]: designation.toLowerCase() };
         }
         if (year) {
             searchObj.year = year;
@@ -89,7 +92,7 @@ router.post('/findFolder', async (req, res) => {
 // @access    Public
 router.post('/', async (req, res) => {
     try {
-        const { name, year, number, format, isSubFolder, shelfID, parentFolderId } = req.body;
+        const { name, designation, year, number, format, isSubFolder, shelfID, parentFolderId } = req.body;
 
         if (isSubFolder) {
             if (!parentFolderId) {
@@ -97,7 +100,8 @@ router.post('/', async (req, res) => {
             }
         }
 
-        if (!name || !year || !number || !format || !shelfID) {
+        if ( !name || !designation ||!year || !number || !format || !shelfID) {
+          
             res.send(400).send('One or more of the required fields is missing');
         }
         if (format !== 'a3' && format !== 'a4') {
@@ -106,6 +110,7 @@ router.post('/', async (req, res) => {
 
         const folder = await Folder.create({
             name: name.toLowerCase(),
+            designation,//: designation.toLowerCase(),
             year,
             number: number.toLowerCase(),
             format: format.toLowerCase(),
@@ -154,7 +159,7 @@ router.delete('/:id', async (req, res) => {
 // @desc Update contact
 // @access Private
 router.put('/:id', async (req, res) => {
-    const { name, year, number, format, isSubFolder, ShelfId, parentFolderId } = req.body;
+    const { name, designation, year, number, format, isSubFolder, ShelfId, parentFolderId } = req.body;
 
     try {
         if (isSubFolder) {
@@ -163,7 +168,7 @@ router.put('/:id', async (req, res) => {
             }
         }
 
-        if (!name || !year || !number || !format) {
+        if (!name || !designation || !year || !number || !format) {
             res.send(400).send('One or more of the required fields is missing');
         }
         if (format !== 'a3' && format !== 'a4') {
@@ -173,6 +178,7 @@ router.put('/:id', async (req, res) => {
         const folder = await Folder.update(
             {
                 name,
+                designation,
                 year,
                 number,
                 format,

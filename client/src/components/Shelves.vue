@@ -107,14 +107,16 @@
     .shelves {
         display: grid;
         grid-template-columns: repeat(3, 500px);
-        // grid-template-rows: repeat(6, 500px);
+        // grid-template-rows: repeat(6, 250px);
         grid-gap: 40px;
         .shelf-column {
             display: grid;
-            // grid-template-columns: repeat(3, 500px);
-            grid-template-rows: repeat(6, 500px);
+            // grid-template-columns: repeat(3, 150px);
+            grid-template-rows: repeat(6, 130px);
             grid-gap: 40px;
+              //transform: scale(0.5, 0.5);
         }
         margin-bottom: 50px;
+      
     }
 </style>

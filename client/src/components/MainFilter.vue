@@ -101,9 +101,9 @@
     @import '../styles/colors.scss';
 
     .main-filter {
-        margin-bottom: 90px;
+        margin-bottom: 40px;
         .input-wrapper {
-            margin-right: 30px;
+            margin-right: 20px;
         }
     }
     .single-row {
@@ -111,10 +111,10 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
         & > * {
-            flex: 1 0 30%;
-            max-width: 46%;
+            flex: 1 0 10%;
+            max-width: 60%;
         }
     }
 
@@ -131,12 +131,12 @@
             flex: 1 0;
             max-width: 240px;
             &.clear-filter {
-                width: 60px;
-                min-width: 60px;
+                width: 40px;
+                min-width: 10px;
                 max-width: 60px;
-                padding: 18px;
+                padding: 5px;
                 line-height: 0;
-                margin-left: 30px;
+                margin-left: 10px;
                 border-color: $delete;
                 color: $delete;
             }

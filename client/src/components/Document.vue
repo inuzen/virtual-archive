@@ -35,7 +35,7 @@
         @Prop(Object) public document;
         // @State highlightedDocuments;
         @Action deleteDocument;
-        public tags = ['обработано', 'на проверке', 'very long fucking tag for some reason'];
+        public tags = ['обработано', 'на проверке', 'very long  tag for some reason'];
         public expand = false;
 
         public onShowDescription(e) {

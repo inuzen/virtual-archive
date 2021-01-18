@@ -11,15 +11,23 @@
                 <div v-if="!folderEditMode" class="name">
                     {{ fullFolder.name }}
                 </div>
+                <div v-if="!folderEditMode" class="designation">
+                    {{ fullFolder.designation }}
+                </div>
                 <div v-if="!folderEditMode" class="number">
                     {{ fullFolder.number }}
                 </div>
+                
                 <div v-if="folderEditMode" class="name">
                     <TextInput @input="(val) => onInputChange(val, 'name')" :value="fullFolder.name" />
+                </div>
+                <div v-if="folderEditMode" class="designation">
+                    <TextInput @input="(val) => onInputChange(val, 'designation')" :value="fullFolder.designation" />
                 </div>
                 <div v-if="folderEditMode" class="number">
                     <TextInput @input="(val) => onInputChange(val, 'number')" :value="fullFolder.number" />
                 </div>
+                
             </div>
             <div class="edit-button-container" @click="editModeOn" v-if="!folderEditMode">
                 <div class="img-wrapper">
@@ -73,9 +81,9 @@
                 <Document v-for="doc in fullFolder.Documents" :key="doc.id" :document="doc" />
             </div>
         </div>
-        <md-dialog :md-active.sync="showAddFolderModal">
-            <FolderModal :isSubfolder="true" :parentFolderId="fullFolder.id" @closeFolderModal="closeAddFolderModal" />
-        </md-dialog>
+      //  <md-dialog :md-active.sync="showAddFolderModal">
+         //   <FolderModal :isSubfolder="true" :parentFolderId="fullFolder.id" @closeFolderModal="closeAddFolderModal" />
+       // </md-dialog>
         <md-dialog :md-active.sync="showDocumentModal">
             <DocumentModal :folderId="fullFolder.id" :folderName="fullFolder.name" @closeDocModal="closeDocModal" />
         </md-dialog>

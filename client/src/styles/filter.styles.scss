@@ -9,10 +9,10 @@
 
     .checkbox-wrapper {
         font-size: 20px;
-        line-height: 150%;
+        line-height: 60%;
         font-weight: bold;
         color: $text-folder;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         cursor: pointer;
         input {
             margin-right: 10px;
@@ -25,14 +25,14 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 60%;
     & > * {
-        flex: 1 1 100%;
+        flex: 1 1 70%;
     }
     &.combined-filter {
         justify-content: flex-start;
         .input-wrapper {
-            margin-right: 0;
+            margin-right: 1;
             .no-right-border {
                 border-right: 0;
                 border-top-right-radius: 0;
