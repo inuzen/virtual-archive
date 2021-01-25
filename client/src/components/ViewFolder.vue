@@ -17,7 +17,10 @@
                 <div v-if="!folderEditMode" class="number">
                     {{ fullFolder.number }}
                 </div>
-                
+                <div v-if="!folderEditMode" class="doc_type">
+                    {{ fullFolder.doc_type }}
+                </div>
+
                 <div v-if="folderEditMode" class="name">
                     <TextInput @input="(val) => onInputChange(val, 'name')" :value="fullFolder.name" />
                 </div>
@@ -27,7 +30,10 @@
                 <div v-if="folderEditMode" class="number">
                     <TextInput @input="(val) => onInputChange(val, 'number')" :value="fullFolder.number" />
                 </div>
-                
+                <div v-if="folderEditMode" class="doc_type">
+                    <TextInput @input="(val) => onInputChange(val, 'doc_type')" :value="fullFolder.doc_type" />
+                </div>
+
             </div>
             <div class="edit-button-container" @click="editModeOn" v-if="!folderEditMode">
                 <div class="img-wrapper">
@@ -70,6 +76,7 @@
                 <span>Инв №</span>
                 <span>Обозначение</span>
                 <span>Документ</span>
+                <span>Тип документа</span>
                 <span>Стикер</span>
             </div>
             <div v-if="foundDocuments.length" class="document-list search-result">

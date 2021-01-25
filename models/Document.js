@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
             designation: {
                 type: DataTypes.STRING,
             },
+            doc_type: {
+                type: DataTypes.STRING,
+                //allowNull: false,
+            },
             description: {
                 type: DataTypes.TEXT,
             },

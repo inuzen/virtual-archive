@@ -111,8 +111,8 @@
         grid-gap: 40px;
         .shelf-column {
             display: grid;
-            // grid-template-columns: repeat(3, 150px);
-            grid-template-rows: repeat(6, 130px);
+            // grid-template-columns: repeat(3, 200px);
+            grid-template-rows: repeat(6, 200px);
             grid-gap: 40px;
               //transform: scale(0.5, 0.5);
         }

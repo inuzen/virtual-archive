@@ -8,6 +8,7 @@
                 <TextInput :label="'Инв №'" @input="(val) => onInputChange(val, 'number')" />
                 <TextInput :label="'Обозначение'" @input="(val) => onInputChange(val, 'designation')" />
                 <TextInput :label="'Название'" @input="(val) => onInputChange(val, 'name')" />
+                <TextInput :label="'Тип документа'" @input="(val) => onInputChange(val, 'doc_type')" />
                 <TextInput :label="'Описание'" @input="(val) => onInputChange(val, 'description')" />
                 <TextInput :label="'Теги'" @input="(val) => onInputChange(val, 'tags')" />
                 <div class="button-row">
@@ -38,6 +39,7 @@
             name: '',
             number: '',
             designation: '',
+            doc_type: '',
             description: '',
             tags: '',
         };

@@ -11,6 +11,7 @@
                 :disabled="!enabled"
             />
             <TextInput :label="'Название'" @input="(val) => onInputChange(val, 'name')" :disabled="!enabled" />
+            <TextInput :label="'Тип документа'" @input="(val) => onInputChange(val, 'doc_type')" :disabled="!enabled" />
         </div>
     </div>
 </template>
@@ -36,6 +37,7 @@
             name: '',
             number: '',
             designation: '',
+            doc_type: '',
         };
         created() {
             this.setDocumentFilter(this.emptyFilter);

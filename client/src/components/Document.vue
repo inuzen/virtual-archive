@@ -5,6 +5,7 @@
             <span class="document__name">{{ document.number }}</span>
             <span class="document__designation">{{ document.designation }}</span>
             <span class="document__name">{{ document.name }}</span>
+            <span class="document__doc_type">{{ document.doc_type }}</span>
             <div class="document__tags">
                 <div v-for="tag in document.tags" :key="tag" class="tag">
                     <span class="tag-text">{{ tag }}</span>
@@ -59,15 +60,15 @@
         &.highlight {
             // font-weight: bold;
         }
-        font-size: 20px;
-        line-height: 120%;
-        &__main-info {
-            display: grid;
-            grid-template-columns: 150px 420px 420px 240px 60px;
-            grid-gap: 30px;
-            justify-items: start;
-            cursor: pointer;
-        }
+    font-size: 20px;
+    line-height: 100%;
+    &__main-info {
+        display: grid;
+        grid-template-columns: 150px 310px 310px 210px 240px 60px;
+        grid-gap: 30px;
+        justify-items: start;
+        cursor: pointer;
+    }
         &__description-wrapper {
             text-align: left;
             .title {
@@ -86,7 +87,7 @@
             justify-content: flex-start;
             .tag {
                 background-color: $sticker;
-                padding: 5px;
+                padding: 2px;
                 border-radius: 5px;
                 font-size: 20px;
                 text-align: left;
@@ -101,7 +102,7 @@
                 margin-bottom: 10px;
                 cursor: default;
                 .tag-text {
-                    margin-right: 15px;
+                    margin-right: 10px;
                 }
                 .delete-tag {
                     width: 100%;
@@ -112,7 +113,7 @@
             .add-tag {
                 cursor: pointer;
                 width: min-content;
-                font-size: 35px;
+                font-size: 40px;
             }
         }
 
