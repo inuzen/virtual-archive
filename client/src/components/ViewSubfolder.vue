@@ -115,20 +115,14 @@
         public markForDelete = false;
         public foundDocuments = [];
         public fullFolder = {};
-        public shelfFilter = {
-            name: '',
-            number: 1,
-        };
 
         async created() {
             if (this.currentSubfolderId) {
                 await this.getSubfolder(this.currentSubfolderId);
                 this.fullFolder = this.currentSubfolder;
-                this.foundDocuments = this.fullFolder.Documents.filter((doc) =>
+                this.foundDocuments = this.currentSubfolder.Documents.filter((doc)=>
                     this.highlightedDocuments.includes(doc.id),
                 );
-                this.shelfFilter.name = this.currentShelf.name;
-                this.shelfFilter.number = this.currentShelf.number;
             }
                     }
               
