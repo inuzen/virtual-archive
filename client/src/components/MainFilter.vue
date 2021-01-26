@@ -103,7 +103,7 @@
     .main-filter {
         margin-bottom: 15px;
         .input-wrapper {
-            margin-right: 10px;
+            margin-right: 2px;
         }
     }
     .single-row {
@@ -111,7 +111,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 12px;
+        margin-bottom: 20px;
         & > * {
             flex: 1 0 10%;
             max-width: 60%;
@@ -125,7 +125,7 @@
         align-items: flex-end;
         .filter-container {
             flex: 1 0;
-            margin-right: 10px;
+            margin-right: 100px;
         }
         .btn {
             flex: 1 0;
@@ -134,7 +134,7 @@
                 width: 40px;
                 min-width: 10px;
                 max-width: 60px;
-                padding: 2px;
+                padding: 5px;
                 line-height: 0;
                 margin-left: 10px;
                 border-color: $delete;

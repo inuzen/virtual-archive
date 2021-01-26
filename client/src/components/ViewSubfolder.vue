@@ -24,7 +24,7 @@
                 <div v-if="folderEditMode" class="number">
                     <TextInput @input="(val) => onInputChange(val, 'number')" :value="fullFolder.number" />
                 </div>
-                <div v-if="folderEditMode" class="doc-type">
+                <div v-if="folderEditMode" class="doc_type">
                     <TextInput @input="(val) => onInputChange(val, 'doc_type')" :value="fullFolder.doc_type" />
                 </div>
             </div>
@@ -59,7 +59,12 @@
                 <span>Тип документа</span>
                 <span>Стикер</span>
             </div>
+            <div v-if="foundDocuments.length" class="document-list search-result">
+                <span class="document-list__label">Search Results:</span>
+                <Document v-for="doc in foundDocuments" :key="doc.id" :document="doc" />
+            </div>
             <div class="document-list">
+                <span class="document-list__label" v-if="foundDocuments.length">All Docs:</span>
                 <Document v-for="doc in fullFolder.Documents" :key="doc.id" :document="doc" />
             </div>
         </div>
@@ -96,6 +101,8 @@
         @State currentSubfolderId;
         @State currentSubfolder;
         @State currentShelf;
+        @State shelves;
+        @State highlightedDocuments;
         @Action getDocumentsByFolder;
         @Action getSubfolder;
         @Action toggleSubfolderView;
@@ -104,16 +111,27 @@
 
         public folderEditMode = false;
         public showDocumentModal = false;
+        public showAddFolderModal = false;
         public markForDelete = false;
+        public foundDocuments = [];
         public fullFolder = {};
+        public shelfFilter = {
+            name: '',
+            number: 1,
+        };
 
         async created() {
             if (this.currentSubfolderId) {
                 await this.getSubfolder(this.currentSubfolderId);
                 this.fullFolder = this.currentSubfolder;
+                this.foundDocuments = this.fullFolder.Documents.filter((doc) =>
+                    this.highlightedDocuments.includes(doc.id),
+                );
+                this.shelfFilter.name = this.currentShelf.name;
+                this.shelfFilter.number = this.currentShelf.number;
             }
-        }
-
+                    }
+              
         public onInputChange(value, inputName) {
             this.fullFolder[inputName] = value;
         }
