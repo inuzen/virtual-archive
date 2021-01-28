@@ -72,7 +72,8 @@
             Добавить документ
         </button>
         <div class="document-list-container">
-            <div class="header">
+            <span class="document-list__label">Всего документов в папке: {{fullFolder.Documents.length}}</span>
+                <div class="header">
                 <span>Инв №</span>
                 <span>Обозначение</span>
                 <span>Документ</span>
@@ -80,17 +81,17 @@
                 <span>Стикер</span>
             </div>
             <div v-if="foundDocuments.length" class="document-list search-result">
-                <span class="document-list__label">Search Results:</span>
+                <span class="document-list__label"> Найдено документов: {{foundDocuments.length}}</span>
                 <Document v-for="doc in foundDocuments" :key="doc.id" :document="doc" />
             </div>
             <div class="document-list">
-                <span class="document-list__label" v-if="foundDocuments.length">All Docs:</span>
+                <span class="document-list__label" v-if="foundDocuments.length">Все документы:</span>
                 <Document v-for="doc in fullFolder.Documents" :key="doc.id" :document="doc" />
             </div>
         </div>
-      //  <md-dialog :md-active.sync="showAddFolderModal">
-         //   <FolderModal :isSubfolder="true" :parentFolderId="fullFolder.id" @closeFolderModal="closeAddFolderModal" />
-       // </md-dialog>
+        <md-dialog :md-active.sync="showAddFolderModal">
+            <FolderModal :isSubfolder="true" :parentFolderId="fullFolder.id" @closeFolderModal="closeAddFolderModal" />
+        </md-dialog>
         <md-dialog :md-active.sync="showDocumentModal">
             <DocumentModal :folderId="fullFolder.id" :folderName="fullFolder.name" @closeDocModal="closeDocModal" />
         </md-dialog>
