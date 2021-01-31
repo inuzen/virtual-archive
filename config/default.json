@@ -1,4 +1,4 @@
 {
-    "postgresURI": "postgres://postgres:postgres@localhost:5432/va1",
+    "postgresURI": "postgres://postgres:admin@localhost:5432/va1",
     "jwtSecret": "secret"
 }

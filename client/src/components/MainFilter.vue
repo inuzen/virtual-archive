@@ -9,10 +9,8 @@
                 @filterChange="onShelfFilterChange"
             />
             <FolderFilter :enabled="folderFilterEnabled" @toggleChkbx="onFolderToggle" />
-        </div>
-        <div class="doc-filter-row">
             <DocumentFilter :enabled="documentFilterEnabled" @toggleChkbx="onDocToggle" />
-            <button @click="onClick" class="btn primary">ИСКАТЬ</button>
+            <button @click="onClick" class="btn primary ">ИСКАТЬ</button>
             <button @click="onClearFilters" class="btn secondary clear-filter">X</button>
         </div>
     </div>
@@ -116,20 +114,11 @@
             flex: 1 0 10%;
             max-width: 60%;
         }
-    }
-
-    .doc-filter-row {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: flex-end;
-        .filter-container {
-            flex: 1 0;
-            margin-right: 100px;
-        }
         .btn {
             flex: 1 0;
-            max-width: 240px;
+            max-width: 120px;
+            min-width: auto;
+            font-size: 18px;
             &.clear-filter {
                 width: 40px;
                 min-width: 10px;
@@ -140,6 +129,17 @@
                 border-color: $delete;
                 color: $delete;
             }
+        }
+    }
+
+    .doc-filter-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: flex-end;
+        .filter-container {
+            flex: 1 0;
+            margin-right: 100px;
         }
     }
 </style>

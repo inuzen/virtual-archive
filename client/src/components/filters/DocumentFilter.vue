@@ -11,7 +11,7 @@
                 :disabled="!enabled"
             />
             <TextInput :label="'Название'" @input="(val) => onInputChange(val, 'name')" :disabled="!enabled" />
-            <TextInput :label="'Тип документа'" @input="(val) => onInputChange(val, 'doc_type')" :disabled="!enabled" />
+            <TextInput :label="'Тип док-та'" @input="(val) => onInputChange(val, 'doc_type')" :disabled="!enabled" />
         </div>
     </div>
 </template>

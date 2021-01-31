@@ -5,7 +5,10 @@
         display: block;
     }
 }
-
+.show-all-btn {
+    cursor: pointer;
+    margin: 20px 0;
+}
 .folder-modal-wrapper {
     width: 100%;
     max-width: 1590px;

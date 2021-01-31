@@ -1,5 +1,5 @@
 <template>
-    <div class="filter-container shelf-filter">
+    <div class="filter-container folder-filter">
         <div class="checkbox-wrapper" v-on:click="onClick">
             <input type="checkbox" v-model="enabled" name="" id="" />Поиск по папкам
         </div>
@@ -52,4 +52,10 @@
     }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+    .folder-filter {
+        flex-grow: 0;
+        flex-shrink: 1;
+        min-width: 400px;
+    }
+</style>

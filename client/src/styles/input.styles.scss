@@ -18,9 +18,9 @@
     input,
     select,
     textarea {
-        padding: 8px 30px;
+        padding: 4px 20px;
         min-height: 40px;
-        font-size: 20px;
+        font-size: 16px;
         line-height: 150%;
         border-radius: 5px;
         transition: all 0.3s;
@@ -29,7 +29,7 @@
     }
     .input-label {
         margin-left: 30px;
-        font-size: 18px;
+        font-size: 14px;
         line-height: 150%;
         color: $text-interactive;
         transition: all 0.3s;
@@ -42,7 +42,7 @@
         background-color: $white;
         // background-image: url('../../assets/icons/select-arrow.svg');
         background-size: 10px 8px;
-        background-position: center right 30px;
+        background-position: center right 5px;
         background-repeat: no-repeat;
         border: 1px solid $interactive;
         &:disabled {

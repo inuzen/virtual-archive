@@ -20,7 +20,7 @@
                     >
                 </select>
             </div>
-            <div class="input-wrapper">
+            <div class="input-wrapper shelf-select-n">
                 <label for="" class="input-label" :class="{ disabled: !enabled }">№</label>
                 <select
                     @change="(val) => onInputChange(val, 'number')"
@@ -86,4 +86,12 @@
     }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+    .shelf-select-n {
+        max-width: 60px;
+    }
+    .shelf-filter {
+        min-width: 250px;
+        flex: 0 1;
+    }
+</style>

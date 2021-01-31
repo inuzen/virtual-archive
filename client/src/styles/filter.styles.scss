@@ -5,6 +5,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: flex-start;
+    margin-right: 10px;
     /*justify-content: flex-start;*/
 
     .checkbox-wrapper {
@@ -26,7 +27,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 60%;
+    width: 100%;
     & > * {
         flex: 1 1 70%;
     }
