@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
+            short_name: {
+                type: DataTypes.STRING,
+            },
             designation: {
                 type: DataTypes.STRING,
                 // allowNull: false,

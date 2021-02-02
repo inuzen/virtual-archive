@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 });
 
 //Define routes
-// app.use('/api/auth', require('./routes/auth'));
+//app.use('/api/auth', require('./routes/auth'));
 app.use('/api/shelves', require('./routes/shelves'));
 app.use('/api/folders', require('./routes/folders'));
 app.use('/api/documents', require('./routes/documents'));

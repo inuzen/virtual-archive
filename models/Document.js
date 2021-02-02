@@ -16,13 +16,16 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 //allowNull: false,
             },
+            date_in_arch: {
+                type: DataTypes.STRING,
+            },
             description: {
                 type: DataTypes.TEXT,
             },
             tags: {
                 type: DataTypes.ARRAY(DataTypes.STRING),
             },
-        },
+        },     
         {
             timestamps: false,
         },

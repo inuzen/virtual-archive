@@ -42,11 +42,14 @@ router.get('/folderFull/:id', async (req, res) => {
 //returns and array of matching folder IDs
 router.post('/findFolder', async (req, res) => {
     try {
-        const { name, designation, year, number, format } = req.body;
+        const { name, short_name, designation, year, number, format } = req.body;
 
         let searchObj = {};
         if (name) {
             searchObj.name = { [Op.substring]: name.toLowerCase() };
+        }
+        if (short_name) {
+            searchObj.short_name = { [Op.substring]: short_name.toLowerCase() };
         }
         if (designation) {
             searchObj.designation = designation; // { [Op.substring]: designation.toLowerCase() };
@@ -92,7 +95,7 @@ router.post('/findFolder', async (req, res) => {
 // @access    Public
 router.post('/', async (req, res) => {
     try {
-        const { name, designation, year, number, format, isSubFolder, shelfID, parentFolderId } = req.body;
+        const { name, short_name, designation, year, number, format, isSubFolder, shelfID, parentFolderId } = req.body;
 
         if (isSubFolder) {
             if (!parentFolderId) {
@@ -110,6 +113,7 @@ router.post('/', async (req, res) => {
 
         const folder = await Folder.create({
             name: name.toLowerCase(),
+            short_name: short_name.toLowerCase(),
             designation,//: designation.toLowerCase(),
             year,
             number: number.toLowerCase(),
@@ -159,7 +163,7 @@ router.delete('/:id', async (req, res) => {
 // @desc Update contact
 // @access Private
 router.put('/:id', async (req, res) => {
-    const { name, designation, year, number, format, isSubFolder, ShelfId, parentFolderId } = req.body;
+    const { name, short_name, designation, year, number, format, isSubFolder, ShelfId, parentFolderId } = req.body;
 
     try {
         if (isSubFolder) {
@@ -178,6 +182,7 @@ router.put('/:id', async (req, res) => {
         const folder = await Folder.update(
             {
                 name,
+                short_name,
                 designation,
                 year,
                 number,

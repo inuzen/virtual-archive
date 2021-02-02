@@ -31,7 +31,7 @@ router.get('/byFolder/:folderId', async (req, res) => {
 
 router.post('/findDocument', async (req, res) => {
     try {
-        const { name, number, designation, doc_type, folderId } = req.body;
+        const { name, number, designation, doc_type, date_in_arch, folderId } = req.body;
 
         let searchObj = {};
         if (name) {
@@ -45,6 +45,9 @@ router.post('/findDocument', async (req, res) => {
         }
         if (doc_type) {
             searchObj.doc_type = { [Op.substring]: doc_type.toLowerCase() };
+        }
+        if (date_in_arch) {
+            searchObj.date_in_arch = { [Op.substring]: date_in_arch.toLowerCase() };
         }
         if (folderId) {
             searchObj.FolderId = folderId;
@@ -102,7 +105,7 @@ router.get('/:id', async (req, res) => {
 // @access    Public
 router.post('/', async (req, res) => {
     try {
-        const { name, number, designation, doc_type, description, tags, folderId } = req.body;
+        const { name, number, designation, doc_type, date_in_arch, description, tags, folderId } = req.body;
 
         if (!name || !folderId) {
             res.send(400).send('Either name or folderId is missing!');
@@ -112,6 +115,7 @@ router.post('/', async (req, res) => {
             number: number ? number.toLowerCase() : '',
             designation: designation ? designation.toLowerCase() : '',
             doc_type: doc_type.toLowerCase(),
+            date_in_arch: date_in_arch.toLowerCase(),
             description: description ? description.toLowerCase() : '',
             tags: tags ? tags : [],
             FolderId: folderId,
@@ -130,7 +134,7 @@ router.post('/', async (req, res) => {
 // @access    Public
 router.put('/:id', async (req, res) => {
     try {
-        const { name, number, designation, doc_type, description, tags, folderId } = req.body;
+        const { name, number, designation, doc_type, date_in_arch, description, tags, folderId } = req.body;
 
         if (!name || !folderId) {
             res.send(400).send('Either name or folderId is missing!');
@@ -141,6 +145,7 @@ router.put('/:id', async (req, res) => {
                 number,
                 designation,
                 doc_type,
+                date_in_arch,
                 description,
                 tags,
                 FolderId: folderId,

@@ -3,6 +3,7 @@
         <div class="close-modal" @click="closeFolderModal">
             <div class="img-wrapper">
                 <img src="../assets/icons/black-cross.svg" alt="" />
+
             </div>
         </div>
         <div class="folder-title-container">
@@ -24,6 +25,9 @@
                 <div v-if="folderEditMode" class="name">
                     <TextInput @input="(val) => onInputChange(val, 'name')" :value="fullFolder.name" />
                 </div>
+                <div v-if="folderEditMode" class="short_name">
+                    <TextInput @input="(val) => onInputChange(val, 'short_name')" :value="fullFolder.short_name" />
+                </div>
                 <div v-if="folderEditMode" class="designation">
                     <TextInput @input="(val) => onInputChange(val, 'designation')" :value="fullFolder.designation" />
                 </div>
@@ -43,12 +47,10 @@
         <div v-if="folderEditMode" class="folder-edit-container">
             <p class="label">Переместить в</p>
             <div class="folder-actions-row">
-                <ShelfFilter
-                    :enabled="true"
-                    :showCheckbox="false"
-                    @filterChange="onShelfFilterChange"
-                    :initialValue="currentShelf"
-                />
+                <ShelfFilter :enabled="true"
+                             :showCheckbox="false"
+                             @filterChange="onShelfFilterChange"
+                             :initialValue="currentShelf" />
                 <div v-if="markForDelete" class="message-container">
                     Удаление папки вступит в силу после сохранения изменений, все данные в этой папке будут потеряны
                 </div>
@@ -64,7 +66,7 @@
         <div class="subfolder-row">
             <Folder v-for="folder in fullFolder.Folders" :key="folder.id" :folder="folder" />
             <button @click="showAddFolderModal = true" class="btn primary add-subfolder-btn">
-                +
+                Добавить подпапку
             </button>
         </div>
         <button @click="onShowDocumentModal" class="btn primary">
@@ -77,6 +79,7 @@
                 <span>Обозначение</span>
                 <span>Документ</span>
                 <span>Тип документа</span>
+                <span>Дата принятия в архив</span>
                 <span>Стикер</span>
             </div>
             <div v-if="foundDocuments.length" class="document-list search-result">
@@ -89,11 +92,13 @@
                     <Document v-for="doc in fullFolder.Documents" :key="doc.id" :document="doc" />
                 </template>
                 <template v-if="!showAll">
-                    <Document v-for="doc in fullFolder.Documents.slice(0, 5)" :key="doc.id" :document="doc" />
+                    <Document v-for="doc in fullFolder.Documents.slice(0, 15)" :key="doc.id" :document="doc" />
                 </template>
-            </div>
+               </div>
             <p class="show-all-btn" @click="() => (showAll = !showAll)">{{ showAll ? 'Скрыть' : 'Показать все' }}</p>
+           
         </div>
+        
         <md-dialog :md-active.sync="showAddFolderModal">
             <FolderModal :isSubfolder="true" :parentFolderId="fullFolder.id" @closeFolderModal="closeAddFolderModal" />
         </md-dialog>

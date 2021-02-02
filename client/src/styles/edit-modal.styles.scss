@@ -3,14 +3,14 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    font-size: 25px;
+    font-size: 20px;
     // line-height: 150%;
     width: 500px;
     background-color: $white;
 
     .modal-title {
         text-transform: uppercase;
-        padding: 17px 30px;
+        padding: 17px 20px;
         background-color: $interactive;
         color: $white;
         font-weight: bold;
@@ -18,7 +18,7 @@
         width: 100%;
     }
     .modal-content {
-        padding: 17px 30px;
+        padding: 1px 20px;
 
         .modal-info {
             text-transform: uppercase;
@@ -30,13 +30,13 @@
         flex-direction: column;
 
         .input-wrapper {
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
         .button-row {
             display: flex;
             flex-direction: row;
-            margin-top: 30px;
-            margin-bottom: 30px;
+            margin-top: 5px;
+            margin-bottom: 15px;
             & > * {
                 min-width: 0;
                 // width: 190px;

@@ -99,7 +99,7 @@
     @import '../styles/colors.scss';
 
     .main-filter {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         .input-wrapper {
             margin-right: 2px;
         }
@@ -115,14 +115,16 @@
             max-width: 60%;
         }
         .btn {
+            transform: translateY(25px);
             flex: 1 0;
-            max-width: 120px;
+            max-width: 100px;
             min-width: auto;
             font-size: 18px;
             &.clear-filter {
-                width: 40px;
-                min-width: 10px;
-                max-width: 60px;
+                transform: translateY(25px);
+                width: 20px;
+                min-width: 20px;
+                max-width: 30px;
                 padding: 5px;
                 line-height: 0;
                 margin-left: 10px;

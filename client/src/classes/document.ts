@@ -5,6 +5,7 @@ interface IDocument {
     number: string;
     designation: string;
     doc_type: string;
+    date_in_arch: string;
     tags: string[];
     description: string;
 }
@@ -16,6 +17,7 @@ export class DocumentClass implements IDocument {
     public number: string = ''
     public designation: string = ''
     public doc_type: string = ''
+    public date_in_arch: string = ''
     public tags: string[] = []
     public description: string = ''
 

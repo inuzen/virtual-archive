@@ -2,6 +2,7 @@ interface IFolder {
     [key: string]: any;
     id: string;
     name: string;
+    short_name: string;
     designation: string;
     number: string;
     year: number;
@@ -13,6 +14,7 @@ export class FolderClass implements IFolder {
     [key: string]: any
     public id: string = ''
     public name: string = ''
+    public short_name: string = ''
     public designation: string = ''
     public number: string = ''
     public year: number = 2020

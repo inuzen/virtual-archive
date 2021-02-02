@@ -9,7 +9,7 @@
             <div class="folder__year">
                 <span>{{ folder.year }}</span>
             </div>
-            <div class="folder__name">{{ folder.name }}</div>
+            <div class="folder__short_name">{{ folder.short_name }}</div>
             <div class="folder__designation">{{ folder.designation }}</div>
             <div class="folder__number">{{ folder.number }}</div>
         </div>
@@ -53,8 +53,8 @@
     .folder {
         height: 30px;
         width: 220px;
-        background-color: #0b26cb;
-        padding: 1px 6px;
+        background-color: #051a94;
+        padding: 1px 4px;
         border-radius: 2px;
         margin: 1px;
         font-size: 20px;
@@ -72,28 +72,27 @@
         }
         
         
-        &__name {
-            font-size: 7px;
-            overflow: hidden;
+        &__short_name {
+            font-size: 9px;
+            overflow: auto;
             text-overflow: ellipsis;
             text-align: left;
             line-height: 1.2;
             text-transform: uppercase;
             white-space: nowrap;
             max-width: 50%;
-           transition: all .2s linear;
-            //transform: translateX(-15px);
-        }
-
+        /*  transition: all .2s linear;*/
             
+        }
+                    
         &__designation {
 
-            font-size: 7px;
+            font-size: 9px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            max-width: 40%;
-           // transform: translate(70px,7px);
+            max-width: 50%;
+           /*// transform: translate(70px,7px);*/
       
         }
         &__year {

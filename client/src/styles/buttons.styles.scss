@@ -10,18 +10,19 @@
     right: 550px;
     top: 175px;*/
     background-color: $interactive;
-    padding: 11px 24px;
+    padding: 10px 10px;
     text-align: center;
-    font-size: 25px;
+    font-size: 20px;
     line-height: 100%;
     color: $white;
-    border-radius: 7px;
+    border-radius: 8px;
     min-width: 240px;
-    height: 50px;
+    height: 40px;
     cursor: pointer;
     &.primary {
         background-color: $interactive;
         font-weight: bold;
+        padding: 8px 8px;
     }
     &.secondary {
         background-color: $white;
