@@ -94,7 +94,7 @@
                 background-color: $sticker;
                 padding: 5px;
                 border-radius: 5px;
-                font-size: 10px;
+                font-size: 9px;
                 text-align: left;
                 font-weight: bold;
                 width: max-content;

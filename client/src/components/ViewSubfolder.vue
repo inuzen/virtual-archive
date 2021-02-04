@@ -79,7 +79,7 @@
                     <Document v-for="doc in fullFolder.Documents" :key="doc.id" :document="doc" />
                 </template>
                 <template v-if="!showAll">
-                    <Document v-for="doc in fullFolder.Documents.slice(0, 5)" :key="doc.id" :document="doc" />
+                    <Document v-for="doc in fullFolder.Documents.slice(0, 15)" :key="doc.id" :document="doc" />
                 </template>
             </div>
             <p class="show-all-btn" @click="() => (showAll = !showAll)">{{ showAll ? 'Скрыть' : 'Показать все' }}</p>
@@ -132,18 +132,19 @@
         public markForDelete = false;
         public showAll = false;
         public foundDocuments = [];
-        public fullFolder = {};
+        public fullFolder: any = {};
+      
 
         async created() {
             if (this.currentSubfolderId) {
                 await this.getSubfolder(this.currentSubfolderId);
                 this.fullFolder = this.currentSubfolder;
-                this.foundDocuments = this.currentSubfolder.Documents.filter((doc) =>
-                    this.highlightedDocuments.includes(doc.id),
-                );
+                //this.foundDocuments = this.currentSubfolder.Documents.filter((doc) =>
+                //    this.highlightedDocuments.includes(doc.id),
+                //);
             }
         }
-
+               
         public onInputChange(value, inputName) {
             this.fullFolder[inputName] = value;
         }

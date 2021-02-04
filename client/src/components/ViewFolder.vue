@@ -12,7 +12,7 @@
                 <div v-if="!folderEditMode" class="name">
                     {{ fullFolder.name }}
                 </div>
-                <div v-if="!folderEditMode" class="designation">
+                   <div v-if="!folderEditMode" class="designation">
                     {{ fullFolder.designation }}
                 </div>
                 <div v-if="!folderEditMode" class="number">

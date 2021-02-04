@@ -155,6 +155,7 @@ export default new Vuex.Store({
         },
         ADD_DOCUMENT(state, newDoc) {
             state.currentFolder.Documents.push(newDoc);
+            state.currentSubFolder.Documents.push(newDoc);
         },
         DELETE_DOCUMENT(state, docId) {
             state.currentFolder.Documents = state.currentFolder.Documents.filter((doc) => doc.id !== docId);

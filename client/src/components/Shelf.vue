@@ -92,18 +92,18 @@
         display: flex;
         position: absolute;
         align-items: center;
-        top: -24px;
-        left: -25px;
+        top: -20px;
+        left: -10px;
         z-index: 100;
         cursor: pointer;
 
         .create-icon {
-            width: 45px;
-            height: 45px;
+            width: 25px;
+            height: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 60px;
+            font-size: 30px;
             color: white;
             font-weight: bold;
             background-color: #1bc3ce;
@@ -114,7 +114,7 @@
         &__text {
             background-color: white;
             padding: 8px;
-            font-size: 20px;
+            font-size: 15px;
             border-radius: 5px;
             margin-left: 2px;
             box-shadow: 1px 1px 5px #d3d3d3;
